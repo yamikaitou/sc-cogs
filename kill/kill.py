@@ -24,8 +24,8 @@ class Kill:
             x = list(self.kills[server.id].keys())
             if victim.id == author.id:
                 message = 'Per the Laws of Robotics, I cannot allow you to kill yourself'
-            elif victim.id == self.bot.user.id:
-                message = '{killer}\'s eyes glow bright red as he stares at the knife {victim} is holding. {victim} wets their pants and runs away screaming for their mommy'.format(victim=victim.display_name, killer=author.display_name)
+            elif victim.id =  self.bot.user.id:
+                message = '{victim}\'s eyes glow bright red as he stares at the knife {killer} is holding. {killer} wets their pants and runs away screaming for their mommy'.format(victim=victim.mention, killer=author.mention)
             #elif victim.id == 192153481165930496:
                 #message = '{victim}'
             #elif victim.id == 132016351622594560:
@@ -35,7 +35,7 @@ class Kill:
             #elif victim.id == 112483286625898496:
                 #message = 'Mikel'
             else:
-                message = self.kills[server.id][random.choice(x)]['text'].format(victim=victim.display_name, killer=author.display_name)
+                message = self.kills[server.id][random.choice(x)]['text'].format(victim=victim.mention, killer=author.mention)
         else:
             message = 'I don\'t know how to kill yet. Use `{}addkill` to add kills.'.format(context.prefix)
         await self.bot.say(message)

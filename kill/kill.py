@@ -24,7 +24,7 @@ class Kill:
             x = list(self.kills[server.id].keys())
             if victim.id == author.id:
                 message = 'Per the Laws of Robotics, I cannot allow you to kill yourself'
-            elif victim.id =  self.bot.user.id:
+            elif victim.id == self.bot.user.id:
                 message = '{victim}\'s eyes glow bright red as he stares at the knife {killer} is holding. {killer} wets their pants and runs away screaming for their mommy'.format(victim=victim.mention, killer=author.mention)
             #elif victim.id == 192153481165930496:
                 #message = '{victim}'

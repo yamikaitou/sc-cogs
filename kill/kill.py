@@ -20,17 +20,13 @@ class Kill:
         """Randomly chooses a kill."""
         server = context.message.server
         author = context.message.author
-        if victim.id == 192153481165930496:
-            await self.bot.say("(DEBUG) Success1")
-        if victim.id == '192153481165930496':
-            await self.bot.say("(DEBUG) Success2")
         if server.id in self.kills:
             x = list(self.kills[server.id].keys())
             if victim.id == author.id:
                 message = 'Per the Laws of Robotics, I cannot allow you to kill yourself'
             elif victim.id == self.bot.user.id:
                 message = '{victim}\'s eyes glow bright red as he stares at the knife {killer} is holding. {killer} wets their pants and runs away screaming for their mommy'.format(victim=victim.mention, killer=author.mention)
-            elif victim.id == 192153481165930496:
+            elif victim.id == '192153481165930496':
                 message = '{killer} follows {victim} down a dark alley. {killer} rushes in for the kill but goes right through {victim} as if he wasn\'t even there. {killer} looks around confused. {victim} appears behind {killer} and smashes him with a very large hammer.'.format(victim=victim.mention, killer=author.mention)
             #elif victim.id == 132016351622594560:
                 #message = 'Taco'

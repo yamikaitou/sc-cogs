@@ -20,7 +20,10 @@ class Kill:
         """Randomly chooses a kill."""
         server = context.message.server
         author = context.message.author
-        await self.bot.say("(DEBUG) {}".format(victim.id))
+        if victim.id == 192153481165930496:
+            await self.bot.say("(DEBUG) Success1")
+        if victim.id == '192153481165930496':
+            await self.bot.say("(DEBUG) Success2")
         if server.id in self.kills:
             x = list(self.kills[server.id].keys())
             if victim.id == author.id:

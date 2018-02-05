@@ -15,4 +15,4 @@ class Yamik:
         await self.bot.say(ctx.message.server.roles)
 
 def setup(bot):
-    bot.add_cog(Mycog(bot))
+    bot.add_cog(Yamik(bot))

@@ -12,8 +12,21 @@ class Yamik:
         """This does stuff!"""
 
         #Your code will go here
-        print(ctx.message.server.roles)
-        #await self.bot.say()
+        await self.bot.say(self._role_from_string("Owner", ctx.message.server))
+    
+    def _role_from_string(self, server, rolename, roles=None):
+        if roles is None:
+            roles = server.roles
+
+        roles = [r for r in roles if r is not None]
+        role = discord.utils.find(lambda r: r.name.lower() == rolename.lower(),
+                                  roles)
+        try:
+            log.debug("Role {} found from rolename {}".format(
+                role.name, rolename))
+        except Exception:
+            log.debug("Role not found for rolename {}".format(rolename))
+        return role
 
 def setup(bot):
     bot.add_cog(Yamik(bot))

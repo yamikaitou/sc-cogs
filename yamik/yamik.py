@@ -22,7 +22,7 @@ class Yamik:
         """This does stuff!"""
 
         #Your code will go here
-        await self.bot.say(self._role_from_string(ctx.message.server, rolename))
+        await self.bot.say(self._role_from_string(ctx.message.server, rolename).permissions)
     
     def _role_from_string(self, server, rolename, roles=None):
         if roles is None:

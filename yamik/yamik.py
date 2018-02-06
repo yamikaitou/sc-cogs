@@ -8,6 +8,9 @@ import asyncio
 import logging
 import os
 
+
+log = logging.getLogger("red.admin")
+
 class Yamik:
     """My custom cog that does stuff!"""
 

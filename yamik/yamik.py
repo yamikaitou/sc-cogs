@@ -7,7 +7,7 @@ class Yamik:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(pass_context=True)
     async def mycom(self, ctx, rolename, user: discord.Member=None):
         """This does stuff!"""
 

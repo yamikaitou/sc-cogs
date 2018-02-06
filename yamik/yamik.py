@@ -12,7 +12,8 @@ class Yamik:
         """This does stuff!"""
 
         #Your code will go here
-        await self.bot.say(ctx.message.server.roles)
+        print(ctx.message.server.roles)
+        #await self.bot.say()
 
 def setup(bot):
     bot.add_cog(Yamik(bot))

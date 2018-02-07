@@ -24,7 +24,11 @@ class Yamik:
         #Your code will go here
         roles = ctx.message.server.roles
         for r in roles:
-            await self.bot.say(r.name)
+            if r.name is "@everyone":
+                await self.bot.say("everyone - {}".format(r.permissions.value))
+            await self.bot.say("{} - {}".format(r.name, r.permissions.value))
+        
+        await self.bot.say("Done")
     
     def _role_from_string(self, server, rolename, roles=None):
         if roles is None:

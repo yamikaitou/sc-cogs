@@ -24,9 +24,9 @@ class Yamik:
         #Your code will go here
         roles = ctx.message.server.roles
         for r in roles:
-            if r.name is "@everyone":
-                await self.bot.say("everyone - {}".format(r.permissions.value))
-            await self.bot.say("{} - {}".format(r.name, r.permissions.value))
+            if r.is_everyone:
+                await self.bot.say("{}|everyone|{}".format(r.position, r.permissions.value))
+            await self.bot.say("{}|{}|{}".format(r.position, r.name, r.permissions.value))
         
         await self.bot.say("Done")
     

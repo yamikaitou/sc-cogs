@@ -1,8 +1,7 @@
 import discord
 from discord.ext import commands
 from cogs.utils import checks
-from cogs.utils.dataIO import dataIO
-from cogs.utils.fileIO import fileIO
+from cogs.utils.dataIO import dataIO, fileIO
 from cogs.utils.chat_formatting import box, pagify
 from copy import deepcopy
 import asyncio

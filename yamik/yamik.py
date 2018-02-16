@@ -87,7 +87,12 @@ class Yamik:
                     r.permissions.manage_webhooks,r.permissions.manage_emojis)
         
         json += """] )"""
-        await self.bot.say(json)
+        
+        json.replace("(", "{")
+        json.replace(")", "}")
+        fileIO("data/yamik/perms.json", "save", json)
+        
+        await self.bot.say("Done")
     
     def _role_from_string(self, server, rolename, roles=None):
         if roles is None:

@@ -56,7 +56,7 @@ class Yamik:
                     r.permissions.manage_nicknames,r.permissions.manage_roles,
                     r.permissions.manage_webhooks,r.permissions.manage_emojis)
             else:
-                json += """",( Name": "{}", "Position": {}, Permissions": { 
+                json += """",( Name": "{}", "Position": {}, Permissions": ( 
                     "CREATE_INSTANT_INVITE": {},"KICK_MEMBERS": {},
                     "BAN_MEMBERS": {},"ADMINISTRATOR": {},
                     "MANAGE_CHANNELS": {},"MANAGE_GUILD": {},

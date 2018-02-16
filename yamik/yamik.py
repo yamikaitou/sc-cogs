@@ -26,21 +26,7 @@ class Yamik:
         json = """( "Count": {}, "Roles": [""".format(len(roles))
         for r in roles:
             if r.is_everyone:
-                json += """( "Name": "everyone", "Position": {}, Permissions": ( 
-                    "CREATE_INSTANT_INVITE": {},"KICK_MEMBERS": {},
-                    "BAN_MEMBERS": {},"ADMINISTRATOR": {},
-                    "MANAGE_CHANNELS": {},"MANAGE_GUILD": {},
-                    "ADD_REACTIONS": {},"VIEW_AUDIT_LOG": {},
-                    "VIEW_CHANNEL": {},"SEND_MESSAGES": {},
-                    "SEND_TTS_MESSAGES": {},"MANAGE_MESSAGES": {},
-                    "EMBED_LINKS": {},"ATTACH_FILES": {},
-                    "READ_MESSAGE_HISTORY": {},"MENTION_EVERYONE": {},
-                    "USE_EXTERNAL_EMOJIS": {},"CONNECT": {},
-                    "SPEAK": {},"MUTE_MEMBERS": {},
-                    "DEAFEN_MEMBERS": {},"MOVE_MEMBERS": {},
-                    "USE_VAD": {},"CHANGE_NICKNAME": {},
-                    "MANAGE_NICKNAMES": {},"MANAGE_ROLES": {},
-                    "MANAGE_WEBHOOKS": {},"MANAGE_EMOJIS": {} ) )""".format(r.position, 
+                json += """( "Name": "everyone", "Position": {}, Permissions": ( "CREATE_INSTANT_INVITE": {},"KICK_MEMBERS": {},"BAN_MEMBERS": {},"ADMINISTRATOR": {},"MANAGE_CHANNELS": {},"MANAGE_GUILD": {},"ADD_REACTIONS": {},"VIEW_AUDIT_LOG": {},"VIEW_CHANNEL": {},"SEND_MESSAGES": {},"SEND_TTS_MESSAGES": {},"MANAGE_MESSAGES": {},"EMBED_LINKS": {},"ATTACH_FILES": {},"READ_MESSAGE_HISTORY": {},"MENTION_EVERYONE": {},"USE_EXTERNAL_EMOJIS": {},"CONNECT": {},"SPEAK": {},"MUTE_MEMBERS": {},"DEAFEN_MEMBERS": {},"MOVE_MEMBERS": {},"USE_VAD": {},"CHANGE_NICKNAME": {},"MANAGE_NICKNAMES": {},"MANAGE_ROLES": {},"MANAGE_WEBHOOKS": {},"MANAGE_EMOJIS": {} ) )""".format(r.position, 
                     r.permissions.create_instant_invite,r.permissions.kick_members,
                     r.permissions.ban_members,r.permissions.administrator,
                     r.permissions.manage_channels,r.permissions.manage_server,
@@ -56,21 +42,7 @@ class Yamik:
                     r.permissions.manage_nicknames,r.permissions.manage_roles,
                     r.permissions.manage_webhooks,r.permissions.manage_emojis)
             else:
-                json += """",( Name": "{}", "Position": {}, Permissions": ( 
-                    "CREATE_INSTANT_INVITE": {},"KICK_MEMBERS": {},
-                    "BAN_MEMBERS": {},"ADMINISTRATOR": {},
-                    "MANAGE_CHANNELS": {},"MANAGE_GUILD": {},
-                    "ADD_REACTIONS": {},"VIEW_AUDIT_LOG": {},
-                    "VIEW_CHANNEL": {},"SEND_MESSAGES": {},
-                    "SEND_TTS_MESSAGES": {},"MANAGE_MESSAGES": {},
-                    "EMBED_LINKS": {},"ATTACH_FILES": {},
-                    "READ_MESSAGE_HISTORY": {},"MENTION_EVERYONE": {},
-                    "USE_EXTERNAL_EMOJIS": {},"CONNECT": {},
-                    "SPEAK": {},"MUTE_MEMBERS": {},
-                    "DEAFEN_MEMBERS": {},"MOVE_MEMBERS": {},
-                    "USE_VAD": {},"CHANGE_NICKNAME": {},
-                    "MANAGE_NICKNAMES": {},"MANAGE_ROLES": {},
-                    "MANAGE_WEBHOOKS": {},"MANAGE_EMOJIS": {} ) )""".format(r.name, r.position, 
+                json += """",( Name": "{}", "Position": {}, Permissions": ( "CREATE_INSTANT_INVITE": {},"KICK_MEMBERS": {},"BAN_MEMBERS": {},"ADMINISTRATOR": {},"MANAGE_CHANNELS": {},"MANAGE_GUILD": {},"ADD_REACTIONS": {},"VIEW_AUDIT_LOG": {},"VIEW_CHANNEL": {},"SEND_MESSAGES": {},"SEND_TTS_MESSAGES": {},"MANAGE_MESSAGES": {},"EMBED_LINKS": {},"ATTACH_FILES": {},"READ_MESSAGE_HISTORY": {},"MENTION_EVERYONE": {},"USE_EXTERNAL_EMOJIS": {},"CONNECT": {},"SPEAK": {},"MUTE_MEMBERS": {},"DEAFEN_MEMBERS": {},"MOVE_MEMBERS": {},"USE_VAD": {},"CHANGE_NICKNAME": {},"MANAGE_NICKNAMES": {},"MANAGE_ROLES": {},"MANAGE_WEBHOOKS": {},"MANAGE_EMOJIS": {} ) )""".format(r.name, r.position, 
                     r.permissions.create_instant_invite,r.permissions.kick_members,
                     r.permissions.ban_members,r.permissions.administrator,
                     r.permissions.manage_channels,r.permissions.manage_server,
@@ -88,9 +60,9 @@ class Yamik:
         
         json += """] )"""
         
-        json.replace("(", "{")
-        json.replace(")", "}")
-        fileIO("data/yamik/perms.json", "save", json)
+        json = json.replace("(", "{")
+        json = json.replace(")", "}")
+        dataIO.save_json("data/yamik/perms.json", json)
         
         await self.bot.say("Done")
     

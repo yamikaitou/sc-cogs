@@ -62,6 +62,7 @@ class Yamik:
         
         json = json.replace("(", "{")
         json = json.replace(")", "}")
+        json = json.replace("\\", "")
         dataIO.save_json("data/yamik/perms.json", json)
         
         await self.bot.say("Done")

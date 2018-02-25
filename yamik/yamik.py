@@ -27,13 +27,16 @@ class Yamik:
 
         #Your code will go here
         roles = ctx.message.server.roles
-        with table.batch_writer() as batch:
+        with table.batch_writer(overwrite_by_pkeys=['Name']) as batch:
             for r in roles:
                 if r.is_everyone:
                     table.put_item(
                         Item={
                             'Name':'everyone',
                             'Position':r.position,
+                            'Color':r.colour,
+                            'Display':r.hoist,
+                            'Mention':r.mentionable,
                             "CREATE_INSTANT_INVITE":r.permissions.create_instant_invite,
                             "KICK_MEMBERS":r.permissions.kick_members,
                             "BAN_MEMBERS":r.permissions.ban_members,
@@ -68,6 +71,9 @@ class Yamik:
                         Item={
                             'Name':r.name,
                             'Position':r.position,
+                            'Color':r.colour,
+                            'Display':r.hoist,
+                            'Mention':r.mentionable,
                             "CREATE_INSTANT_INVITE":r.permissions.create_instant_invite,
                             "KICK_MEMBERS":r.permissions.kick_members,
                             "BAN_MEMBERS":r.permissions.ban_members,

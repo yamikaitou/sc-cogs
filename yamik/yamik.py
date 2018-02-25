@@ -10,7 +10,7 @@ import os
 import boto3
 
 
-log = logging.getLogger("red.admin")
+log = logging.getLogger("red")
 
 class Yamik:
     """My custom cog that does stuff!"""

@@ -122,12 +122,12 @@ class Yamik:
         
         await self.bot.say("Done")
     
-    def deleteTable(self):
+    async def deleteTable(self):
         await self.bot.say("Deleting Table")
         return self.db.delete_table(TableName="discord_groups")
     
     
-    def createTable(self):
+    async def createTable(self):
         waiter = self.db.get_waiter('table_not_exists')
         await self.bot.say("Creating table")
         table = self.db.create_table(

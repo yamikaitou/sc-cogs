@@ -32,11 +32,42 @@ class Yamik:
     async def push(self, ctx, user: discord.Member=None):
         """Erases and pushes current Discord Roles and Permissions to AWS"""
         
-        deleteTable()
-        createTable()
+        await self.bot.say("Deleting Table")
+        self.db.delete_table(TableName="discord_groups")
+        
+        table.meta.client.get_waiter('table_not_exists').wait(TableName='discord_groups')
+        await self.bot.say("Creating table")
+        table = self.db.create_table(
+            TableName="discord_groups",
+            KeySchema=[
+                {
+                    'AttributeName': 'Name',
+                    'KeyType': 'HASH'
+                },
+                {
+                    'AttributeName': 'Position',
+                    'KeyType': 'RANGE'
+                }
+            ],
+            AttributeDefinitions= [
+                {
+                    'AttributeName': 'Name',
+                    'AttributeType': 'S'
+                },
+                {
+                    'AttributeName': 'Position',
+                    'AttributeType': 'N'
+                }
+            ],
+            ProvisionedThroughput={
+                'ReadCapacityUnits': 1,
+                'WriteCapacityUnits': 1
+            }
+        )
+        
         table.meta.client.get_waiter('table_exists').wait(TableName='discord_groups')
         table = self.db.Table("discord_groups")
-        
+        await self.bot.say("Dumping Roles")
 
         #Your code will go here
         roles = ctx.message.server.roles
@@ -122,41 +153,6 @@ class Yamik:
         
         await self.bot.say("Done")
     
-    async def deleteTable(self):
-        await self.bot.say("Deleting Table")
-        return self.db.delete_table(TableName="discord_groups")
-    
-    
-    async def createTable(self):
-        waiter = self.db.get_waiter('table_not_exists')
-        await self.bot.say("Creating table")
-        table = self.db.create_table(
-            TableName="discord_groups",
-            KeySchema=[
-                {
-                    'AttributeName': 'Name',
-                    'KeyType': 'HASH'
-                },
-                {
-                    'AttributeName': 'Position',
-                    'KeyType': 'RANGE'
-                }
-            ],
-            AttributeDefinitions= [
-                {
-                    'AttributeName': 'Name',
-                    'AttributeType': 'S'
-                },
-                {
-                    'AttributeName': 'Position',
-                    'AttributeType': 'N'
-                }
-            ],
-            ProvisionedThroughput={
-                'ReadCapacityUnits': 1,
-                'WriteCapacityUnits': 1
-            }
-        )
 
 def setup(bot):
     bot.add_cog(Yamik(bot))

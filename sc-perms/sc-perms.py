@@ -33,7 +33,8 @@ class Yamik:
         """Erases and pushes current Discord Roles and Permissions to AWS"""
         
         await self.bot.say("Deleting Table")
-        self.db.delete_table(TableName="discord_groups")
+        table = self.db.Table("discord_groups")
+        table.delete()
         
         table.meta.client.get_waiter('table_not_exists').wait(TableName='discord_groups')
         await self.bot.say("Creating table")

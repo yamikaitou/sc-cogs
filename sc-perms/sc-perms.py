@@ -49,7 +49,7 @@ class Yamik:
         
         conn.close()
         
-        await self.bot.say(self.settings)
+        await self.bot.say("Done")
     
     
     @perms.command(pass_context=True, no_pm=True)

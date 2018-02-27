@@ -38,7 +38,7 @@ class Yamik:
         
         table.meta.client.get_waiter('table_not_exists').wait(TableName='discord_groups')
         await self.bot.say("Creating table")
-        table = dynamodb.create_table(
+        table = self.db.create_table(
             TableName='discord_groups',
             KeySchema=[
                 {

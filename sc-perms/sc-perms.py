@@ -3,14 +3,17 @@ from discord.ext import commands
 from cogs.utils import checks
 from cogs.utils.dataIO import dataIO, fileIO
 from cogs.utils.chat_formatting import box, pagify
+from __main__ import send_cmd_help, settings
 from copy import deepcopy
 import asyncio
 import logging
 import os
 import boto3
+import aiomysql
 
 
 log = logging.getLogger("red")
+loop = asyncio.get_event_loop()
 
 class Yamik:
     """My custom cog that does stuff!"""
@@ -18,6 +21,7 @@ class Yamik:
     def __init__(self, bot):
         self.bot = bot
         self.db = boto3.resource("dynamodb")
+        self.settings = dataIO.load_json("data/sc-perms/settings.json")
 
     @commands.group(pass_context=True, no_pm=True)
     @checks.serverowner_or_permissions(administrator=True)
@@ -27,9 +31,30 @@ class Yamik:
             server = ctx.message.server
             await send_cmd_help(ctx)
     
+    @perms.command(pass_context=True, no_pm=True)
+    async def push2(self, ctx, user: discord.Member=None):
+        """Erases and pushes current Discord Roles and Permissions to SQL"""
+        '''
+        conn = await aiomysql.connect(host='127.0.0.1', port=3306,
+                                      user='root', password='', db='mysql',
+                                      loop=loop)
+    
+        async with conn.cursor() as cur:
+            await cur.execute("SELECT Host,User FROM user")
+            print(cur.description)
+            r = await cur.fetchall()
+            print(r)
+        
+        
+        await self.bot.say("Truncating Table")
+        
+        conn.close()'''
+        
+        await self.bot.say(self.settings)
+    
     
     @perms.command(pass_context=True, no_pm=True)
-    async def push(self, ctx, user: discord.Member=None):
+    async def push2(self, ctx, user: discord.Member=None):
         """Erases and pushes current Discord Roles and Permissions to AWS"""
         
         await self.bot.say("Deleting Table")
@@ -153,6 +178,19 @@ class Yamik:
         
         
         await self.bot.say("Done")
+        
+        def check_folders():
+            folders = ("data", "data/sc-perms/")
+            for folder in folders:
+                if not os.path.exists(folder):
+                    print("Creating " + folder + " folder...")
+                    os.makedirs(folder)
+        
+        
+        def check_files():
+            if not os.path.isfile("data/sc-perms/settings.json"):
+                print("Creating empty data/sc-perms/settings.json")
+                dataIO.save_json("data/sc-perms/settings.json", """{ "host":"", "user":"", "pass":"", "data":"" }""")
     
 
 def setup(bot):

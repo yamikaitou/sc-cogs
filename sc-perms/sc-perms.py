@@ -42,6 +42,7 @@ class Yamik:
         async with conn.cursor() as cur:
             await self.bot.say("Truncating Table")
             await cur.execute("TRUNCATE discord_groups")
+            await conn.commit()
             
             await self.bot.say("Dumping Roles")
             roles = ctx.message.server.roles
@@ -52,7 +53,7 @@ class Yamik:
                 else:
                     sname = r.name
                 
-                cur.execute("INSERT INTO discord_groups VALUES ( '{}',{},'{}',{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{} )".format(
+                await cur.execute("INSERT INTO discord_groups VALUES ( '{}',{},'{}',{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{} )".format(
                     sname,r.position,r.colour,r.hoist,r.mentionable,
                     r.permissions.create_instant_invite,r.permissions.kick_members,r.permissions.ban_members,r.permissions.administrator,
                     r.permissions.manage_channels,r.permissions.manage_server,r.permissions.add_reactions,r.permissions.view_audit_logs,
@@ -62,16 +63,7 @@ class Yamik:
                     r.permissions.deafen_members,r.permissions.move_members,r.permissions.use_voice_activation,r.permissions.change_nickname,
                     r.permissions.manage_nicknames,r.permissions.manage_roles,r.permissions.manage_webhooks,r.permissions.manage_emojis
                     ))
-                await self.bot.say("INSERT INTO discord_groups VALUES ( '{}',{},'{}',{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{} )".format(
-                    sname,r.position,r.colour,r.hoist,r.mentionable,
-                    r.permissions.create_instant_invite,r.permissions.kick_members,r.permissions.ban_members,r.permissions.administrator,
-                    r.permissions.manage_channels,r.permissions.manage_server,r.permissions.add_reactions,r.permissions.view_audit_logs,
-                    r.permissions.read_messages,r.permissions.send_messages,r.permissions.send_tts_messages,r.permissions.manage_messages,
-                    r.permissions.embed_links,r.permissions.attach_files,r.permissions.read_message_history,r.permissions.mention_everyone,
-                    r.permissions.external_emojis,r.permissions.connect,r.permissions.speak,r.permissions.mute_members,
-                    r.permissions.deafen_members,r.permissions.move_members,r.permissions.use_voice_activation,r.permissions.change_nickname,
-                    r.permissions.manage_nicknames,r.permissions.manage_roles,r.permissions.manage_webhooks,r.permissions.manage_emojis
-                    ))
+            await conn.commit()
         
         
         

@@ -66,33 +66,6 @@ class Yamik:
                 'WriteCapacityUnits': 5
             }
         )
-        table = self.db.create_table(
-            TableName="discord_groups",
-            KeySchema=[
-                {
-                    'AttributeName': 'Name',
-                    'KeyType': 'HASH'
-                },
-                {
-                    'AttributeName': 'Position',
-                    'KeyType': 'RANGE'
-                }
-            ],
-            AttributeDefinitions= [
-                {
-                    'AttributeName': 'Name',
-                    'AttributeType': 'S'
-                },
-                {
-                    'AttributeName': 'Position',
-                    'AttributeType': 'N'
-                }
-            ],
-            ProvisionedThroughput={
-                'ReadCapacityUnits': 1,
-                'WriteCapacityUnits': 1
-            }
-        )
         
         table.meta.client.get_waiter('table_exists').wait(TableName='discord_groups')
         await self.bot.say("Dumping Roles")

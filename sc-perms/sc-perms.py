@@ -49,7 +49,7 @@ class Yamik:
                 sname = None
                 if r.is_everyone:
                     sname = 'everyone'
-                else
+                else:
                     sname = r.name
                 
                 cur.execute("INSERT INTO discord_groups VALUES ( '{}',{},'{}',{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{} )".format(

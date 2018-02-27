@@ -179,18 +179,18 @@ class Yamik:
         
         await self.bot.say("Done")
         
-        def check_folders():
-            folders = ("data", "data/sc-perms/")
-            for folder in folders:
-                if not os.path.exists(folder):
-                    print("Creating " + folder + " folder...")
-                    os.makedirs(folder)
-        
-        
-        def check_files():
-            if not os.path.isfile("data/sc-perms/settings.json"):
-                print("Creating empty data/sc-perms/settings.json")
-                dataIO.save_json("data/sc-perms/settings.json", """{ "host":"", "user":"", "pass":"", "data":"" }""")
+def check_folders():
+    folders = ("data", "data/sc-perms/")
+    for folder in folders:
+        if not os.path.exists(folder):
+            print("Creating " + folder + " folder...")
+            os.makedirs(folder)
+
+
+def check_files():
+    if not os.path.isfile("data/sc-perms/settings.json"):
+        print("Creating empty data/sc-perms/settings.json")
+        dataIO.save_json("data/sc-perms/settings.json", """{ "host":"", "user":"", "pass":"", "data":"" }""")
     
 
 def setup(bot):

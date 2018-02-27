@@ -34,21 +34,20 @@ class Yamik:
     @perms.command(pass_context=True, no_pm=True)
     async def push(self, ctx, user: discord.Member=None):
         """Erases and pushes current Discord Roles and Permissions to SQL"""
-        '''
-        conn = await aiomysql.connect(host='127.0.0.1', port=3306,
-                                      user='root', password='', db='mysql',
+        
+        conn = await aiomysql.connect(host=self.settings['host'], port=3306,
+                                      user=self.settings['user'], password=self.settings['pass'], db=self.settings['data'],
                                       loop=loop)
     
         async with conn.cursor() as cur:
-            await cur.execute("SELECT Host,User FROM user")
+            await self.bot.say("Truncating Table")
+            await cur.execute("TRUNCATE discord_groups")
             print(cur.description)
-            r = await cur.fetchall()
-            print(r)
         
         
-        await self.bot.say("Truncating Table")
         
-        conn.close()'''
+        
+        conn.close()
         
         await self.bot.say(self.settings)
     

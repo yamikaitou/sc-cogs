@@ -38,6 +38,34 @@ class Yamik:
         
         table.meta.client.get_waiter('table_not_exists').wait(TableName='discord_groups')
         await self.bot.say("Creating table")
+        table = dynamodb.create_table(
+            TableName='discord_groups',
+            KeySchema=[
+                {
+                    'AttributeName': 'Name',
+                    'KeyType': 'HASH'
+                },
+                {
+                    'AttributeName': 'Position',
+                    'KeyType': 'RANGE'
+                }
+            ],
+            AttributeDefinitions=[
+                {
+                    'AttributeName': 'Name',
+                    'AttributeType': 'S'
+                },
+                {
+                    'AttributeName': 'Position',
+                    'AttributeType': 'N'
+                },
+        
+            ],
+            ProvisionedThroughput={
+                'ReadCapacityUnits': 5,
+                'WriteCapacityUnits': 5
+            }
+        )
         table = self.db.create_table(
             TableName="discord_groups",
             KeySchema=[
@@ -67,7 +95,6 @@ class Yamik:
         )
         
         table.meta.client.get_waiter('table_exists').wait(TableName='discord_groups')
-        table = self.db.Table("discord_groups")
         await self.bot.say("Dumping Roles")
 
         #Your code will go here

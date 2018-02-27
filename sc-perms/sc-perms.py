@@ -32,7 +32,7 @@ class Yamik:
             await send_cmd_help(ctx)
     
     @perms.command(pass_context=True, no_pm=True)
-    async def push2(self, ctx, user: discord.Member=None):
+    async def push(self, ctx, user: discord.Member=None):
         """Erases and pushes current Discord Roles and Permissions to SQL"""
         '''
         conn = await aiomysql.connect(host='127.0.0.1', port=3306,

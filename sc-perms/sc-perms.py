@@ -54,7 +54,7 @@ class Yamik:
                     sname = r.name
                 
                 await cur.execute("""INSERT INTO discord_groups VALUES ( {},"{}",{},"{}",{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{} )""".format(
-                    r.server,sname,r.position,r.colour,r.hoist,r.mentionable,
+                    r.id,sname,r.position,r.colour,r.hoist,r.mentionable,
                     r.permissions.create_instant_invite,r.permissions.kick_members,r.permissions.ban_members,r.permissions.administrator,
                     r.permissions.manage_channels,r.permissions.manage_server,r.permissions.add_reactions,r.permissions.view_audit_logs,
                     r.permissions.read_messages,r.permissions.send_messages,r.permissions.send_tts_messages,r.permissions.manage_messages,

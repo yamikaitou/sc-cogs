@@ -40,11 +40,9 @@ class Yamik:
                                       loop=loop)
     
         async with conn.cursor() as cur:
-            await self.bot.say("Truncating Table")
             await cur.execute("TRUNCATE discord_groups")
             await conn.commit()
             
-            await self.bot.say("Dumping Roles")
             roles = ctx.message.server.roles
             for r in roles:
                 sname = None
@@ -70,134 +68,7 @@ class Yamik:
         
         conn.close()
         
-        await self.bot.say("Done")
-    
-    
-    @perms.command(pass_context=True, no_pm=True)
-    async def push2(self, ctx, user: discord.Member=None):
-        """Erases and pushes current Discord Roles and Permissions to AWS"""
-        
-        await self.bot.say("Deleting Table")
-        table = self.db.Table("discord_groups")
-        table.delete()
-        
-        table.meta.client.get_waiter('table_not_exists').wait(TableName='discord_groups')
-        await self.bot.say("Creating table")
-        table = self.db.create_table(
-            TableName='discord_groups',
-            KeySchema=[
-                {
-                    'AttributeName': 'Name',
-                    'KeyType': 'HASH'
-                },
-                {
-                    'AttributeName': 'Position',
-                    'KeyType': 'RANGE'
-                }
-            ],
-            AttributeDefinitions=[
-                {
-                    'AttributeName': 'Name',
-                    'AttributeType': 'S'
-                },
-                {
-                    'AttributeName': 'Position',
-                    'AttributeType': 'N'
-                },
-        
-            ],
-            ProvisionedThroughput={
-                'ReadCapacityUnits': 5,
-                'WriteCapacityUnits': 5
-            }
-        )
-        
-        table.meta.client.get_waiter('table_exists').wait(TableName='discord_groups')
-        await self.bot.say("Dumping Roles")
-
-        #Your code will go here
-        roles = ctx.message.server.roles
-        with table.batch_writer() as batch:
-            for r in roles:
-                if r.is_everyone:
-                    table.put_item(
-                        Item={
-                            'Name':'everyone',
-                            'Position':r.position,
-                            'Color':r.colour,
-                            'Display':r.hoist,
-                            'Mention':r.mentionable,
-                            "CREATE_INSTANT_INVITE":r.permissions.create_instant_invite,
-                            "KICK_MEMBERS":r.permissions.kick_members,
-                            "BAN_MEMBERS":r.permissions.ban_members,
-                            "ADMINISTRATOR":r.permissions.administrator,
-                            "MANAGE_CHANNELS":r.permissions.manage_channels,
-                            "MANAGE_GUILD":r.permissions.manage_server,
-                            "ADD_REACTIONS":r.permissions.add_reactions,
-                            "VIEW_AUDIT_LOG":r.permissions.view_audit_logs,
-                            "VIEW_CHANNEL":r.permissions.read_messages,
-                            "SEND_MESSAGES":r.permissions.send_messages,
-                            "SEND_TTS_MESSAGES":r.permissions.send_tts_messages,
-                            "MANAGE_MESSAGES":r.permissions.manage_messages,
-                            "EMBED_LINKS":r.permissions.embed_links,
-                            "ATTACH_FILES":r.permissions.attach_files,
-                            "READ_MESSAGE_HISTORY":r.permissions.read_message_history,
-                            "MENTION_EVERYONE":r.permissions.mention_everyone,
-                            "USE_EXTERNAL_EMOJIS":r.permissions.external_emojis,
-                            "CONNECT":r.permissions.connect,
-                            "SPEAK":r.permissions.speak,
-                            "MUTE_MEMBERS":r.permissions.mute_members,
-                            "DEAFEN_MEMBERS":r.permissions.deafen_members,
-                            "MOVE_MEMBERS":r.permissions.move_members,
-                            "USE_VAD":r.permissions.use_voice_activation,
-                            "CHANGE_NICKNAME":r.permissions.change_nickname,
-                            "MANAGE_NICKNAMES":r.permissions.manage_nicknames,
-                            "MANAGE_ROLES":r.permissions.manage_roles,
-                            "MANAGE_WEBHOOKS":r.permissions.manage_webhooks,
-                            "MANAGE_EMOJIS":r.permissions.manage_emojis
-                        })
-                else:
-                    table.put_item(
-                        Item={
-                            'Name':r.name,
-                            'Position':r.position,
-                            'Color':r.colour,
-                            'Display':r.hoist,
-                            'Mention':r.mentionable,
-                            "CREATE_INSTANT_INVITE":r.permissions.create_instant_invite,
-                            "KICK_MEMBERS":r.permissions.kick_members,
-                            "BAN_MEMBERS":r.permissions.ban_members,
-                            "ADMINISTRATOR":r.permissions.administrator,
-                            "MANAGE_CHANNELS":r.permissions.manage_channels,
-                            "MANAGE_GUILD":r.permissions.manage_server,
-                            "ADD_REACTIONS":r.permissions.add_reactions,
-                            "VIEW_AUDIT_LOG":r.permissions.view_audit_logs,
-                            "VIEW_CHANNEL":r.permissions.read_messages,
-                            "SEND_MESSAGES":r.permissions.send_messages,
-                            "SEND_TTS_MESSAGES":r.permissions.send_tts_messages,
-                            "MANAGE_MESSAGES":r.permissions.manage_messages,
-                            "EMBED_LINKS":r.permissions.embed_links,
-                            "ATTACH_FILES":r.permissions.attach_files,
-                            "READ_MESSAGE_HISTORY":r.permissions.read_message_history,
-                            "MENTION_EVERYONE":r.permissions.mention_everyone,
-                            "USE_EXTERNAL_EMOJIS":r.permissions.external_emojis,
-                            "CONNECT":r.permissions.connect,
-                            "SPEAK":r.permissions.speak,
-                            "MUTE_MEMBERS":r.permissions.mute_members,
-                            "DEAFEN_MEMBERS":r.permissions.deafen_members,
-                            "MOVE_MEMBERS":r.permissions.move_members,
-                            "USE_VAD":r.permissions.use_voice_activation,
-                            "CHANGE_NICKNAME":r.permissions.change_nickname,
-                            "MANAGE_NICKNAMES":r.permissions.manage_nicknames,
-                            "MANAGE_ROLES":r.permissions.manage_roles,
-                            "MANAGE_WEBHOOKS":r.permissions.manage_webhooks,
-                            "MANAGE_EMOJIS":r.permissions.manage_emojis
-                        })
-                    
-            
-        
-        
-        await self.bot.say("Done")
+        await self.bot.say("{} roles uploaded".format(count(roles)))
         
 def check_folders():
     folders = ("data", "data/sc-perms/")

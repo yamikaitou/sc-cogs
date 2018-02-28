@@ -8,7 +8,6 @@ from copy import deepcopy
 import asyncio
 import logging
 import os
-import boto3
 import aiomysql
 
 
@@ -20,7 +19,6 @@ class Yamik:
 
     def __init__(self, bot):
         self.bot = bot
-        self.db = boto3.resource("dynamodb")
         self.settings = dataIO.load_json("data/sc-perms/settings.json")
 
     @commands.group(pass_context=True, no_pm=True)
@@ -68,7 +66,7 @@ class Yamik:
         
         conn.close()
         
-        await self.bot.say("{} roles uploaded".format(count(roles)))
+        await self.bot.say("{} roles uploaded".format(len(roles)))
         
 def check_folders():
     folders = ("data", "data/sc-perms/")

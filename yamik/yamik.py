@@ -22,7 +22,16 @@ class Yamik:
     async def mycom(self, ctx, user: discord.Member=None):
         """This does stuff!"""
         
-        
+        try:
+            channel = server.get_channel("351073050772635650")
+            msg = await self.bot.get_message(channel, "419216445319413764")
+        except discord.NotFound:
+            raise CaseMessageNotFound()
+        except discord.Forbidden:
+            raise NoModLogAccess()
+        else:
+            print(msg.reactions)
+            
         await self.bot.say("Done")
     
 def setup(bot):

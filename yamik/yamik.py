@@ -30,7 +30,7 @@ class Yamik:
         except discord.Forbidden:
             raise NoModLogAccess()
         else:
-            for msg.reactions as reaction:
+            for reaction in msg.reactions:
                 if reaction.emoji == "tickets":
                     print(reaction)
             

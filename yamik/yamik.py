@@ -23,7 +23,7 @@ class Yamik:
         """This does stuff!"""
         
         try:
-            channel = server.get_channel("351073050772635650")
+            channel = ctx.message.author.server.get_channel("351073050772635650")
             msg = await self.bot.get_message(channel, "419216445319413764")
         except discord.NotFound:
             raise CaseMessageNotFound()

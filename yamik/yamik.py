@@ -31,8 +31,8 @@ class Yamik:
             raise NoModLogAccess()
         else:
             for reaction in msg.reactions:
-                if reaction.emoji == "tickets":
-                    print(reaction)
+                #if reaction.emoji == "tickets":
+                print(reaction.emoji)
             
         await self.bot.say("Done")
     

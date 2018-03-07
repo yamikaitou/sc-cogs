@@ -47,16 +47,23 @@ class Yamik:
     
     async def poll_wait(self):
         times = divmod(self.countdown - time.time(), 3600)
-        if times[0] == 0 and times[1] >= 30:
+        if times[0] == 1 and times[1] >= 30:
+            await asyncio.sleep(10)
+            await self.bot.say(times)
+        elif times[0] == 0 and times[1] >= 30:
             await asyncio.sleep(5)
+            await self.bot.say(times)
         elif times[0] == 0 and times[1] >= 10:
             await asyncio.sleep(1)
+            await self.bot.say(times)
         elif times[0] < 0:
-            await self.bot.say("done")
+            await self.bot.say(times)
             self.wait_task.cancel()
         else:
             await asyncio.sleep(30)
-            
+            await self.bot.say(times)
+        
+        times = divmod(self.countdown - time.time(), 3600)
         embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: **{}** minutes **{}** seconds\n".format(times[0], times[1]))
         await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
     

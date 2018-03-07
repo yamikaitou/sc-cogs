@@ -10,7 +10,7 @@ import logging
 import os
 import boto3
 import random
-
+import time
 
 log = logging.getLogger("red")
 
@@ -36,10 +36,29 @@ class Yamik:
         #embed = Embed(title="Another Test", color=discord.Color(random.randrange(0x1000000)), description="This is a test of some random system. This is only a test 3")
         #await self.bot.send_message(channel, embed=embed)
         
-        
-        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: 60 minutes 00 seconds\n")
-        msg = await self.bot.say(":confetti_ball:   **GIVEAWAY!!!**   :gift:   {}".format(ctx.message.author.mention), embed=embed)
+        await self.bot.say("Attention {}, a new Giveaway is starting!!!".format(ctx.message.author.mention))
+        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: **1** minutes **00** seconds\n")
+        self.msg = await self.bot.say(":confetti_ball:   **GIVEAWAY!!!**   :gift:   {}".format(ctx.message.author.mention), embed=embed)
         await self.bot.add_reaction(msg, "🎟")
+        self.valid = false
+        self.countdown = time.time() + 60
+        
+        self.wait_task = self.bot.loop.create_task(self.poll_wait())
+    
+    async def poll_wait(self):
+        times = divmod(self.countdown - time.time(), 3600)
+        if times[0] == 0 && times[1] >= 30:
+            await asyncio.sleep(5)
+        elif times[0] == 0 && times[1] >= 10:
+            await asyncio.sleep(1)
+        elif times[0] < 0:
+            await self.bot.say("done")
+            self.wait_task.cancel()
+        else:
+            await asyncio.sleep(30)
+            
+        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: **{}** minutes **{}** seconds\n".format(times[0], times[1]))
+        await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
     
 def setup(bot):
     bot.add_cog(Yamik(bot))

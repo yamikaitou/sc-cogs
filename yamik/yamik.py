@@ -17,6 +17,12 @@ class Yamik:
 
     def __init__(self, bot):
         self.bot = bot
+    
+    async def on_reaction_add(self, reaction, user):
+        print(reaction.message.content)
+        
+    async def on_reaction_remove(self, reaction, user):
+        print(reaction.message.content)
 
     @commands.command(pass_context=True)
     async def mycom(self, ctx, user: discord.Member=None):

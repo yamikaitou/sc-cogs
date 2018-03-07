@@ -21,10 +21,10 @@ class Yamik:
         self.bot = bot
     
     async def on_reaction_add(self, reaction, user):
-        print(reaction.message.content)
+        #print(reaction.message.content)
         
     async def on_reaction_remove(self, reaction, user):
-        print(reaction.message.content)
+        #print(reaction.message.content)
 
     @commands.command(pass_context=True)
     async def mycom(self, ctx, user: discord.Member=None):
@@ -47,9 +47,9 @@ class Yamik:
     
     async def poll_wait(self):
         times = divmod(self.countdown - time.time(), 3600)
-        if times[0] == 0 && times[1] >= 30:
+        if times[0] == 0 and times[1] >= 30:
             await asyncio.sleep(5)
-        elif times[0] == 0 && times[1] >= 10:
+        elif times[0] == 0 and times[1] >= 10:
             await asyncio.sleep(1)
         elif times[0] < 0:
             await self.bot.say("done")

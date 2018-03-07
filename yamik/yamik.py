@@ -43,30 +43,29 @@ class Yamik:
         self.valid = True
         self.countdown = time.time() + 60
         
-        self.wait_task = self.bot.loop.create_task(self.poll_wait())
-    
-    async def poll_wait(self):
-        times = divmod(self.countdown - time.time(), 3600)
-        if times[0] == 1 and times[1] >= 30:
-            print(times)
-            await asyncio.sleep(10)
-        elif times[0] == 0 and times[1] >= 30:
-            print(times)
-            await asyncio.sleep(5)
-        elif times[0] == 0 and times[1] >= 10:
-            print(times)
-            await asyncio.sleep(1)
-        elif times[0] < 0:
-            print(times)
-            self.wait_task.cancel()
-            await self.bot.say("Giveaway complete")
-        else:
-            print(times)
-            await asyncio.sleep(30)
-        
-        times = divmod(self.countdown - time.time(), 3600)
-        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: **{}** minutes **{}** seconds\n".format(times[0], times[1]))
-        await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
+        while True:
+            times = divmod(self.countdown - time.time(), 3600)
+            if times[0] == 1 and times[1] >= 30:
+                print(times)
+                await asyncio.sleep(10)
+            elif times[0] == 0 and times[1] >= 30:
+                print(times)
+                await asyncio.sleep(5)
+            elif times[0] == 0 and times[1] >= 10:
+                print(times)
+                await asyncio.sleep(1)
+            elif times[0] < 0:
+                print(times)
+                self.wait_task.cancel()
+                await self.bot.say("Giveaway complete")
+                break
+            else:
+                print(times)
+                await asyncio.sleep(30)
+            
+            times = divmod(self.countdown - time.time(), 3600)
+            embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: **{}** minutes **{}** seconds\n".format(int(times[0]), int(times[1])))
+            await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
     
 def setup(bot):
     bot.add_cog(Yamik(bot))

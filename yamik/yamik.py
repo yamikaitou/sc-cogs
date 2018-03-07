@@ -28,18 +28,10 @@ class Yamik:
     async def mycom(self, ctx, user: discord.Member=None):
         """This does stuff!"""
         
-        try:
-            channel = ctx.message.author.server.get_channel("351073050772635650")
-            msg = await self.bot.get_message(channel, "419216445319413764")
-        except discord.NotFound:
-            raise CaseMessageNotFound()
-        except discord.Forbidden:
-            raise NoModLogAccess()
-        else:
-            for reaction in msg.reactions:
-                if reaction.emoji == "🎟":
-                    print(reaction)
-            
+        #channel = ctx.message.author.server.get_channel("351073050772635650")
+        channel = ctx.message.author.server.get_channel("206642595949051904")
+        await self.bot.send_message(channel, "This is a test of some random system. This is only a test 1")
+        
         await self.bot.say("Done")
     
 def setup(bot):

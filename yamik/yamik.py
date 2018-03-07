@@ -45,20 +45,19 @@ class Yamik:
         
         while True:
             times = divmod(self.countdown - time.time(), 3600)
-            if times[0] == 1 and times[1] >= 30:
+            if times[0] < 0:
                 print(times)
-                await asyncio.sleep(10)
-            elif times[0] == 0 and times[1] >= 30:
-                print(times)
-                await asyncio.sleep(5)
-            elif times[0] == 0 and times[1] >= 10:
-                print(times)
-                await asyncio.sleep(1)
-            elif times[0] < 0:
-                print(times)
-                self.wait_task.cancel()
                 await self.bot.say("Giveaway complete")
                 break
+            elif times[0] == 0 and times[1] <= 10:
+                print(times)
+                await asyncio.sleep(1)
+            elif times[0] == 0 and times[1] <= 30:
+                print(times)
+                await asyncio.sleep(5)
+            elif times[0] == 1 and times[1] >= 30:
+                print(times)
+                await asyncio.sleep(10)
             else:
                 print(times)
                 await asyncio.sleep(30)

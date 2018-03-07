@@ -36,7 +36,9 @@ class Yamik:
         #embed = Embed(title="Another Test", color=discord.Color(random.randrange(0x1000000)), description="This is a test of some random system. This is only a test 3")
         #await self.bot.send_message(channel, embed=embed)
         
-        await self.bot.say(":confetti_ball: **GIVEAWAY!!!*** :gift: {}".format(ctx.message.author.mention))
+        
+        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: 00 seconds")
+        await self.bot.say(":confetti_ball:   **GIVEAWAY!!!**   :gift:   {}".format(ctx.message.author.mention), embed=embed)
         await self.bot.say("Done")
     
 def setup(bot):

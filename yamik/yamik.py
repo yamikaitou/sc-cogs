@@ -21,12 +21,12 @@ class Yamik:
         self.bot = bot
     
     async def on_reaction_add(self, reaction, user):
-        if self.valid and reaction.message == self.msg and reaction.emoji == "🎟" and user.id != "206641182606884866":
+        if self.valid and reaction.message.id == self.msg.id and reaction.emoji == "🎟" and user.id != "206641182606884866":
             self.entries.append(user)
             print(self.entries)
         
     async def on_reaction_remove(self, reaction, user):
-        if self.valid and reaction.message == self.msg and reaction.emoji == "🎟":
+        if self.valid and reaction.message.id == self.msg.id and reaction.emoji == "🎟":
             self.entries.remove(user)
             print(self.entries)
 

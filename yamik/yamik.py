@@ -40,7 +40,7 @@ class Yamik:
         embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: **1** minutes **00** seconds\n")
         self.msg = await self.bot.say(":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
         await self.bot.add_reaction(self.msg, "🎟")
-        self.valid = false
+        self.valid = True
         self.countdown = time.time() + 60
         
         self.wait_task = self.bot.loop.create_task(self.poll_wait())

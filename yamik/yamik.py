@@ -71,7 +71,7 @@ class Yamik:
         await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
         await self.bot.say(":tada: Congratulations  {}! Please respond to my DM within 6 hours to claim your prize".format(win.mention))
         self.valid = False
-        await self.bot.send_message(win.id, "Respond with `!claim` to claim your winnings")
+        await self.bot.send_message(win, "Respond with `!claim` to claim your winnings")
         
     @commands.command(pass_context=True)
     async def claim(self, ctx, user: discord.Member=None):

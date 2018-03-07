@@ -37,9 +37,9 @@ class Yamik:
         #await self.bot.send_message(channel, embed=embed)
         
         
-        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: 00 seconds")
-        await self.bot.say(":confetti_ball:   **GIVEAWAY!!!**   :gift:   {}".format(ctx.message.author.mention), embed=embed)
-        await self.bot.say("Done")
+        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: 60 minutes 00 seconds\n")
+        msg = await self.bot.say(":confetti_ball:   **GIVEAWAY!!!**   :gift:   {}".format(ctx.message.author.mention), embed=embed)
+        await self.bot.add_reaction(msg, "🎟")
     
 def setup(bot):
     bot.add_cog(Yamik(bot))

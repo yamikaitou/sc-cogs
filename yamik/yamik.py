@@ -48,23 +48,17 @@ class Yamik:
         self.countdown = time.time() + 60
         self.entries = []
         
+        times = divmod(self.countdown - time.time(), 3600)
         while True:
-            times = divmod(self.countdown - time.time(), 3600)
             if times[0] < 0:
-                print(times)
-                await self.bot.say("Giveaway complete")
                 break
             elif times[0] == 0 and times[1] <= 10:
-                print(times)
                 await asyncio.sleep(1)
             elif times[0] == 0 and times[1] <= 30:
-                print(times)
                 await asyncio.sleep(5)
             elif times[0] == 1 and times[1] >= 59:
-                print(times)
                 await asyncio.sleep(10)
             else:
-                print(times)
                 await asyncio.sleep(30)
             
             times = divmod(self.countdown - time.time(), 3600)
@@ -72,10 +66,16 @@ class Yamik:
             await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
         
         
-        win = random.sample(self.entries,1)
-        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="Winner: {}".format(win[0].mention))
+        win = random.sample(self.entries,1)[0]
+        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="Winner: {}".format(win.mention))
         await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
+        await self.bot.say(":tada: Congratulations  {}! Please respond to my DM within 6 hours to claim your prize".format(win.mention))
         self.valid = False
+        await self.bot.send_message(win.id, "Respond with `!claim` to claim your winnings")
+        
+    @commands.command(pass_context=True)
+    async def claim(self, ctx, user: discord.Member=None):
+        await self.bot.say("Thanks")
     
 def setup(bot):
     bot.add_cog(Yamik(bot))

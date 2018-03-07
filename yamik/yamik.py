@@ -32,9 +32,11 @@ class Yamik:
         
         #channel = ctx.message.author.server.get_channel("351073050772635650")
         channel = ctx.message.author.server.get_channel("206642595949051904")
-        embed = Embed(title="Another Test", color=discord.Color(random.randrange(0x1000000)), description="This is a test of some random system. This is only a test 3")
-        await self.bot.send_message(channel, embed=embed)
+        #await self.bot.send_message(channel, "")
+        #embed = Embed(title="Another Test", color=discord.Color(random.randrange(0x1000000)), description="This is a test of some random system. This is only a test 3")
+        #await self.bot.send_message(channel, embed=embed)
         
+        await self.bot.say(":confetti_ball: **GIVEAWAY!!!*** :gift: {}".format(user.mention))
         await self.bot.say("Done")
     
 def setup(bot):

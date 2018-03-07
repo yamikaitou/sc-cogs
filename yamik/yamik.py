@@ -20,11 +20,15 @@ class Yamik:
     def __init__(self, bot):
         self.bot = bot
     
-    #async def on_reaction_add(self, reaction, user):
-        #print(reaction.message.content)
+    async def on_reaction_add(self, reaction, user):
+        if self.valid and reaction.message == self.msg and reaction.emoji == "🎟" and user.id != "206641182606884866":
+            self.entries.append(user)
+            print(self.entries)
         
-    #async def on_reaction_remove(self, reaction, user):
-        #print(reaction.message.content)
+    async def on_reaction_remove(self, reaction, user):
+        if self.valid and reaction.message == self.msg and reaction.emoji == "🎟":
+            self.entries.remove(user)
+            print(self.entries)
 
     @commands.command(pass_context=True)
     async def mycom(self, ctx, user: discord.Member=None):
@@ -42,6 +46,7 @@ class Yamik:
         await self.bot.add_reaction(self.msg, "🎟")
         self.valid = True
         self.countdown = time.time() + 60
+        self.entries = []
         
         while True:
             times = divmod(self.countdown - time.time(), 3600)
@@ -55,7 +60,7 @@ class Yamik:
             elif times[0] == 0 and times[1] <= 30:
                 print(times)
                 await asyncio.sleep(5)
-            elif times[0] == 1 and times[1] >= 30:
+            elif times[0] == 1 and times[1] >= 59:
                 print(times)
                 await asyncio.sleep(10)
             else:
@@ -65,6 +70,12 @@ class Yamik:
             times = divmod(self.countdown - time.time(), 3600)
             embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: **{}** minutes **{}** seconds\n".format(int(times[0]), int(times[1])))
             await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
+        
+        
+        win = random.sample(self.entries,1)
+        embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="Winner: {}".fomrat(win.mention))
+        await self.bot.edit_message(self.msg, ":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
+        self.valid = False
     
 def setup(bot):
     bot.add_cog(Yamik(bot))

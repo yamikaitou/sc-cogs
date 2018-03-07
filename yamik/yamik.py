@@ -38,8 +38,8 @@ class Yamik:
         
         await self.bot.say("Attention {}, a new Giveaway is starting!!!".format(ctx.message.author.mention))
         embed = Embed(title="Giveaway - Free Steam Key (Unknown Game)", color=discord.Color(random.randrange(0x1000000)), description="React with :tickets: to enter!\nTime remaining: **1** minutes **00** seconds\n")
-        self.msg = await self.bot.say(":confetti_ball:   **GIVEAWAY!!!**   :gift:   {}".format(ctx.message.author.mention), embed=embed)
-        await self.bot.add_reaction(msg, "🎟")
+        self.msg = await self.bot.say(":confetti_ball:   **GIVEAWAY!!!**   :gift:", embed=embed)
+        await self.bot.add_reaction(self.msg, "🎟")
         self.valid = false
         self.countdown = time.time() + 60
         

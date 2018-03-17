@@ -29,6 +29,11 @@ class Yamik:
         if self.valid and reaction.message.id == self.msg.id and reaction.emoji == "🎟":
             self.entries.remove(user)
             print(self.entries)
+    
+    @commands.command(pass_context=True)
+    async def mycom2(self, ctx, msg):
+        channel = ctx.message.author.server.get_channel("192153663555371008")
+        await self.bot.send_message(channel, msg)
 
     @commands.command(pass_context=True)
     async def mycom(self, ctx, user: discord.Member=None):

@@ -25,9 +25,9 @@ class Kill:
             if victim.id == author.id:
                 message = 'Per the Laws of Robotics, I cannot allow you to kill yourself'
             elif victim.id == self.bot.user.id:
-                message = 'My eyes glow bright red as he stares at the knife {killer} is holding. {killer2} wets their pants and runs away screaming for their mommy'.format(killer=author.mention, killer2=author.name)
+                message = 'My eyes glow bright red as he stares at the knife {killer} is holding. {killer2} wets their pants and runs away screaming for their mommy'.format(killer=author.mention, killer2=author.display_name)
             elif victim.id == '192153481165930496':
-                message = '{killer} follows YamiKaitou down a dark alley. {killer2} rushes in for the kill but goes right through Yami as if he wasn\'t even there. {killer2} looks around confused. Yami appears behind {killer2} and smashes him with a very large hammer.'.format(killer=author.mention, killer2=author.name)
+                message = '{killer} follows YamiKaitou down a dark alley. {killer2} rushes in for the kill but goes right through Yami as if he wasn\'t even there. {killer2} looks around confused. Yami appears behind {killer2} and smashes him with a very large hammer.'.format(killer=author.mention, killer2=author.display_name)
             elif victim.id == '132016351622594560':
                 message = '{killer} eats a burrito'.format(killer=author.mention)
             #elif victim.id == '202998328152031232':

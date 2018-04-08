@@ -47,9 +47,9 @@ class dns:
         self.settings["zone"] = value
         dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
 
-    @commands.group(pass_context=True, no_pm=True)
+    @commands.group(pass_context=True, no_pm=True, name="dns")
     @checks.serverowner_or_permissions(administrator=True)
-    async def dns(self, ctx):
+    async def _dns(self, ctx):
         """Manage the DNS entries"""
         if ctx.invoked_subcommand is None:
             server = ctx.message.server

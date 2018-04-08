@@ -4,6 +4,7 @@ import asyncio
 from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
 from google.cloud import dns
+from google.oauth2 import service_account
 import os
 
 class dns:

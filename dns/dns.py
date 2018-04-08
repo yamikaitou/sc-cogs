@@ -73,24 +73,20 @@ class dns:
         await self.bot.say("DNS Entry Created")
         
 
+def check_folders():
+    if not os.path.exists("data/dns"):
+        print("Creating data/dns folder...")
+        os.makedirs("data/dns")
+
+
 def check_files():
-    if not os.path.exists(os.path.join("data", "dns", "settings.json")):
-        try:
-            os.mkdir(os.path.join("data", "dns"))
-        except FileExistsError:
-            pass
-        else:
-            dataIO.save_json(os.path.join("data", "dns", "settings.json"), {})
+
+    f = "data/dns/settings.json"
+    if not dataIO.is_valid_json(f):
+        print("Creating default dns's settings.json...")
+        dataIO.save_json(f, {})
 
 def setup(bot):
+    check_folders()
     check_files()
     bot.add_cog(dns(bot))
-    
-    
-import socket
-
-ip_list = []
-ais = socket.getaddrinfo("www.yahoo.com",0,0,0,0)
-for result in ais:
-  ip_list.append(result[-1][0])
-ip_list = list(set(ip_list))

@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from __main__ import send_cmd_help
 import asyncio
+import aiodns
 from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
 from google.cloud import dns

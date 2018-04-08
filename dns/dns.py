@@ -4,6 +4,7 @@ import asyncio
 from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
 from google.cloud import dns
+import os
 
 class dns:
     """My custom cog that does stuff!"""

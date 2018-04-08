@@ -24,7 +24,7 @@ class CustomDNS:
     async def dnsconfig(self, ctx):
         """Config GCloud DNS settings"""
         if ctx.invoked_subcommand is None:
-            await self.bot.say("Project: {}\nDomain: {}\nZone: {}".format(self.settings['project'], self.settings['domain'], self.settings['zone']))
+            await self.bot.say("Project: {}\nDomain: {}\nZone: {}".format(self.settings['project'][0], self.settings['domain'][0], self.settings['zone'][0]))
             
     @dnsconfig.command(pass_context=True, no_pm=True)
     @checks.is_owner()
@@ -61,9 +61,9 @@ class CustomDNS:
         """Create a DNS entry from an NFO name"""
         
         ip = await self.resolver.query("{}.game.nfoservers.com".format(ident), 'A')
-        client = cloud.dns.Client(project=self.settings["project"], credentials=self.creds)
-        zone = client.zone(self.settings['zone'], self.settings['domain'])
-        record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain']), 'A', 60*60*2, [ip,])
+        client = cloud.dns.Client(project=self.settings["project"][0], credentials=self.creds)
+        zone = client.zone(self.settings['zone'][0], self.settings['domain'][0])
+        record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain'][0]), 'A', 60*60*2, [ip,])
         changes = zone.changes()
         changes.create()
         while changes.status != 'done':

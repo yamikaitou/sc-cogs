@@ -58,7 +58,7 @@ class dns:
         """Create a DNS entry from an NFO name"""
         
         ip_list = []
-        ais = asyncio.get_event_loop().getaddrinfo("{}.game.nfoservers.com".format(ident),0,0,0,0)
+        ais = asyncio.get_event_loop().getaddrinfo("{}.game.nfoservers.com".format(ident),0)
         for result in ais:
           ip_list.append(result[-1][0])
         ip_list = list(set(ip_list))

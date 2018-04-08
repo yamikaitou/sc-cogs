@@ -49,7 +49,7 @@ class dns:
     
     @dns.command(pass_context=True, no_pm=True)
     @checks.serverowner_or_permissions(administrator=True)
-    async def nfo(self, ctx, ident, sub)
+    async def nfo(self, ctx, ident, sub):
         """Create a DNS entry from an NFO name"""
         
         ip_list = []

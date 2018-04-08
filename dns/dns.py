@@ -9,6 +9,35 @@ class dns:
         self.bot = bot
         self.settings = dataIO.load_json(os.path.join("data", "dns", "settings.json"))
         credentials = service_account.Credentials.from_service_account_file(os.path.join("data", "dns", "gcloud.json"))
+            
+    @commands.group(pass_context=True, no_pm=True)
+    @checks.is_owner()
+    async def dns(self, ctx):
+        """Config GCloud DNS settings"""
+        if ctx.invoked_subcommand is None:
+            server = ctx.message.server
+            await send_cmd_help(ctx)
+            
+    @dnsconfig.command(pass_context=True, no_pm=True)
+    @checks.is_owner()
+    async def project(self, ctx, *value):
+        """Set the Project-ID"""
+        self.settings["project"] = value
+        dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+            
+    @dnsconfig.command(pass_context=True, no_pm=True)
+    @checks.is_owner()
+    async def domain(self, ctx, *value):
+        """Set the Domain """
+        self.settings["domain"] = value
+        dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+            
+    @dnsconfig.command(pass_context=True, no_pm=True)
+    @checks.is_owner()
+    async def zone(self, ctx, *value):
+        """Set the Zone"""
+        self.settings["zone"] = value
+        dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
 
     @commands.group(pass_context=True, no_pm=True)
     @checks.serverowner_or_permissions(administrator=True)
@@ -19,17 +48,8 @@ class dns:
             await send_cmd_help(ctx)
     
     @dns.command(pass_context=True, no_pm=True)
-    @checks.is_owner()
-    async def config(self, ctx, project: str, domain: str, zone: str):
-        """Set confg values"""
-        self.settings["project"] = project
-        self.settings["domain"] = domain
-        self.settings["zone"] = zone
-        dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
-    
-    @dns.command(pass_context=True, no_pm=True)
     @checks.serverowner_or_permissions(administrator=True)
-    async def nfo(self, ctx, ident: str, sub: str)
+    async def nfo(self, ctx, ident, sub)
         """Create a DNS entry from an NFO name"""
         
         ip_list = []

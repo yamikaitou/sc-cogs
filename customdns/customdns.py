@@ -5,17 +5,17 @@ import asyncio
 import aiodns
 from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
-from google.cloud import dns
+from google import cloud
 from google.oauth2 import service_account
 import os
 
-class dns:
+class CustomDNS:
     """My custom cog that does stuff!"""
 
     def __init__(self, bot):
         self.bot = bot
         self.settings = dataIO.load_json(os.path.join("data", "dns", "settings.json"))
-        credentials = service_account.Credentials.from_service_account_file(os.path.join("data", "dns", "gcloud.json"))
+        self.creds = service_account.Credentials.from_service_account_file(os.path.join("data", "dns", "gcloud.json"))
         loop = asyncio.get_event_loop()
         self.resolver = aiodns.DNSResolver(loop=loop)
             
@@ -61,7 +61,7 @@ class dns:
         """Create a DNS entry from an NFO name"""
         
         ip = await self.resolver.query("{}.game.nfoservers.com".format(ident), 'A')
-        client = dns.Client(project=self.settings["project"], credentials=credentials)
+        client = cloud.dns.Client(project=self.settings["project"], credentials=self.creds)
         zone = client.zone(self.settings['zone'], self.settings['domain'])
         record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain']), 'A', 60*60*2, [ip,])
         changes = zone.changes()
@@ -88,4 +88,4 @@ def check_files():
 def setup(bot):
     check_folders()
     check_files()
-    bot.add_cog(dns(bot))
+    bot.add_cog(CustomDNS(bot))

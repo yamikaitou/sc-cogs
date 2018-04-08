@@ -60,7 +60,7 @@ class dns:
     async def nfo(self, ctx, ident, sub):
         """Create a DNS entry from an NFO name"""
         
-        ip = await resolver.query("{}.game.nfoservers.com".format(ident), 'A')
+        ip = await self.resolver.query("{}.game.nfoservers.com".format(ident), 'A')
         client = dns.Client(project=self.settings["project"], credentials=credentials)
         zone = client.zone(self.settings['zone'], self.settings['domain'])
         record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain']), 'A', 60*60*2, [ip,])

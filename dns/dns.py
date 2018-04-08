@@ -15,7 +15,7 @@ class dns:
             
     @commands.group(pass_context=True, no_pm=True)
     @checks.is_owner()
-    async def dns(self, ctx):
+    async def dnsconfig(self, ctx):
         """Config GCloud DNS settings"""
         if ctx.invoked_subcommand is None:
             server = ctx.message.server

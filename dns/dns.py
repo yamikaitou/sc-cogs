@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from __main__ import send_cmd_help
 import asyncio
 from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
@@ -20,8 +21,7 @@ class dns:
     async def dnsconfig(self, ctx):
         """Config GCloud DNS settings"""
         if ctx.invoked_subcommand is None:
-            server = ctx.message.server
-            await send_cmd_help(ctx)
+            await self.bot.say("Project: {}\nDomain: {}\nZone: {}".format(self.settings['project'], self.settings['domain'], self.settings['zone']))
             
     @dnsconfig.command(pass_context=True, no_pm=True)
     @checks.is_owner()

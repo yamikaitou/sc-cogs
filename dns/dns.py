@@ -1,6 +1,9 @@
 import discord
 from discord.ext import commands
 import asyncio
+from cogs.utils.dataIO import dataIO
+from cogs.utils import checks
+from google.cloud import dns
 
 class dns:
     """My custom cog that does stuff!"""

@@ -65,6 +65,7 @@ class CustomDNS:
         zone = client.zone(self.settings['zone'][0], self.settings['domain'][0])
         record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain'][0]), 'A', 60*60*2, [ip,])
         changes = zone.changes()
+        changes.add_record_set(record_set)
         changes.create()
         while changes.status != 'done':
             asyncio.sleep(60)

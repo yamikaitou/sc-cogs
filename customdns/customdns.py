@@ -63,7 +63,7 @@ class CustomDNS:
         ip = await self.resolver.query("{}.game.nfoservers.com".format(ident), 'A')
         client = cloud.dns.Client(project=self.settings["project"][0], credentials=self.creds)
         zone = client.zone(self.settings['zone'][0], self.settings['domain'][0])
-        record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain'][0]), 'A', 60*60*2, [ip,])
+        record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain'][0]), 'A', 60*60*2, [ip[0].host])
         changes = zone.changes()
         changes.add_record_set(record_set)
         changes.create()

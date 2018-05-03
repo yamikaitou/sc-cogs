@@ -14,7 +14,7 @@ import aiomysql
 log = logging.getLogger("red")
 loop = asyncio.get_event_loop()
 
-class Yamik:
+class scperms:
     """My custom cog that does stuff!"""
 
     def __init__(self, bot):
@@ -85,4 +85,4 @@ def check_files():
 def setup(bot):
     check_folders()
     check_files()
-    bot.add_cog(Yamik(bot))
+    bot.add_cog(scperms(bot))

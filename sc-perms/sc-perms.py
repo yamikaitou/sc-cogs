@@ -19,7 +19,7 @@ class Yamik:
 
     def __init__(self, bot):
         self.bot = bot
-        self.settings = dataIO.load_json("data/sc-perms/settings.json")
+        self.settings = dataIO.load_json("data/supercentral/settings.json")
 
     @commands.group(pass_context=True, no_pm=True)
     @checks.serverowner_or_permissions(administrator=True)
@@ -69,7 +69,7 @@ class Yamik:
         await self.bot.say("{} roles uploaded".format(len(roles)))
         
 def check_folders():
-    folders = ("data", "data/sc-perms/")
+    folders = ("data", "data/supercentral/")
     for folder in folders:
         if not os.path.exists(folder):
             print("Creating " + folder + " folder...")
@@ -77,9 +77,9 @@ def check_folders():
 
 
 def check_files():
-    if not os.path.isfile("data/sc-perms/settings.json"):
-        print("Creating empty data/sc-perms/settings.json")
-        dataIO.save_json("data/sc-perms/settings.json", """{ "host":"", "user":"", "pass":"", "data":"" }""")
+    if not os.path.isfile("data/supercentral/settings.json"):
+        print("Creating empty data/supercentral/settings.json")
+        dataIO.save_json("data/supercentral/settings.json", """{ "host":"", "user":"", "pass":"", "data":"" }""")
     
 
 def setup(bot):

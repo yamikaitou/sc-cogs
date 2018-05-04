@@ -37,11 +37,11 @@ class Yamik:
     
     @commands.command(pass_context=True)
     async def mycom3(self, ctx):
-        await bot.say(content="Garry's Mod\nttt.scgc.xyz - Trouble in Terrorist Town #1\nprop.scgc.xyz - PropHunt #1\n\nCounter Strike Global Offensive\nkz.scgc.xyz - KZ/Climb\njb.scgc.xyz - Jailbreak\n\nTeam Fortress 2\ntf2.scgc.xyz - Unknown\n\nTeamspeak 3\nvoice.scgc.xyz")
+        await self.bot.say(content="Garry's Mod\nttt.scgc.xyz - Trouble in Terrorist Town #1\nprop.scgc.xyz - PropHunt #1\n\nCounter Strike Global Offensive\nkz.scgc.xyz - KZ/Climb\njb.scgc.xyz - Jailbreak\n\nTeam Fortress 2\ntf2.scgc.xyz - Unknown\n\nTeamspeak 3\nvoice.scgc.xyz")
 
     @commands.command(pass_context=True)
     async def mycom4(self, ctx):
-        embed = discord.Embed(title="Server List", colour=discord.Colour(0x426156), url="https://discordapp.com", timestamp=datetime.datetime.utcfromtimestamp(1525418280))
+        embed = Embed(title="Server List", colour=discord.Colour(0x426156), url="https://discordapp.com", timestamp=datetime.datetime.utcfromtimestamp(1525418280))
 
         embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/9mm1HQh9TdVk8JuYgZQFiaUnUm0_8L0z2Nt6oW4zUqw/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/206641182606884866/694c6bd61c8379a64e8302670b4f76e7.webp?width=80&height=80")
         embed.set_author(name="SuperCentral", url="https://discordapp.com", icon_url="https://images-ext-1.discordapp.net/external/9mm1HQh9TdVk8JuYgZQFiaUnUm0_8L0z2Nt6oW4zUqw/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/206641182606884866/694c6bd61c8379a64e8302670b4f76e7.webp?width=80&height=80")
@@ -52,7 +52,7 @@ class Yamik:
         embed.add_field(name="Team Fortress 2", value="tf2.scgc.xyz - Unknown")
         embed.add_field(name="Voice Servers", value="discord.scgc.xyz - Discord (the one you are in)\nvoice.scgc.xyz - Teamspeak3")
         
-        await bot.say(embed=embed)
+        await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True)
     async def mycom(self, ctx, user: discord.Member=None):

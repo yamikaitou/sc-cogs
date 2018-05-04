@@ -42,10 +42,9 @@ class Yamik:
 
     @commands.command(pass_context=True)
     async def mycom4(self, ctx):
-        embed = Embed(title="Server List", colour=discord.Colour(0x426156), url="https://discordapp.com", timestamp=datetime.datetime.utcfromtimestamp(1525418280))
+        embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.utcfromtimestamp(1525418280))
 
-        embed.set_thumbnail(url="https://images-ext-1.discordapp.net/external/9mm1HQh9TdVk8JuYgZQFiaUnUm0_8L0z2Nt6oW4zUqw/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/206641182606884866/694c6bd61c8379a64e8302670b4f76e7.webp?width=80&height=80")
-        embed.set_author(name="SuperCentral", url="https://discordapp.com", icon_url="https://images-ext-1.discordapp.net/external/9mm1HQh9TdVk8JuYgZQFiaUnUm0_8L0z2Nt6oW4zUqw/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/206641182606884866/694c6bd61c8379a64e8302670b4f76e7.webp?width=80&height=80")
+        embed.set_author(name="SuperCentral Server List", url="https://supercentral.co", icon_url="https://images-ext-1.discordapp.net/external/9mm1HQh9TdVk8JuYgZQFiaUnUm0_8L0z2Nt6oW4zUqw/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/206641182606884866/694c6bd61c8379a64e8302670b4f76e7.webp?width=80&height=80")
         embed.set_footer(text="Last Updated")
         
         embed.add_field(name="Garry's Mod", value="ttt.scgc.xyz - Trouble in Terrorist Town #1\nprop.scgc.xyz - PropHunt #1")

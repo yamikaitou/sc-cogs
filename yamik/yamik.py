@@ -47,10 +47,10 @@ class Yamik:
         embed.set_author(name="SuperCentral Server List", url="https://supercentral.co", icon_url="https://images-ext-1.discordapp.net/external/9mm1HQh9TdVk8JuYgZQFiaUnUm0_8L0z2Nt6oW4zUqw/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/206641182606884866/694c6bd61c8379a64e8302670b4f76e7.webp?width=80&height=80")
         embed.set_footer(text="Last Updated")
         
-        embed.add_field(name="Garry's Mod", value="ttt.scgc.xyz - Trouble in Terrorist Town #1\nprop.scgc.xyz - PropHunt #1")
-        embed.add_field(name="Counter Strike  Global Offensive", value="kz.scgc.xyz - KZ/Climb\njb.scgc.xyz - Jailbreak")
-        embed.add_field(name="Team Fortress 2", value="tf2.scgc.xyz - Unknown")
-        embed.add_field(name="Voice Servers", value="discord.scgc.xyz - Discord (the one you are in)\nvoice.scgc.xyz - Teamspeak3")
+        embed.add_field(name="Garry's Mod", value="ttt.scgc.xyz - Trouble in Terrorist Town #1\nprop.scgc.xyz - PropHunt #1", "inline" = False)
+        embed.add_field(name="Counter Strike  Global Offensive", value="kz.scgc.xyz - KZ/Climb\njb.scgc.xyz - Jailbreak", "inline" = False)
+        embed.add_field(name="Team Fortress 2", value="tf2.scgc.xyz - Unknown", "inline" = False)
+        embed.add_field(name="Voice Servers", value="discord.scgc.xyz - Discord (the one you are in)\nvoice.scgc.xyz - Teamspeak3", "inline" = False)
         
         await self.bot.say(embed=embed)
 

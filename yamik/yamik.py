@@ -11,6 +11,7 @@ import os
 import boto3
 import random
 import time
+import datetime
 
 log = logging.getLogger("red")
 
@@ -34,6 +35,24 @@ class Yamik:
     async def mycom2(self, ctx, msg):
         channel = ctx.message.author.server.get_channel("192153663555371008")
         await self.bot.send_message(channel, msg)
+    
+    @commands.command(pass_context=True)
+    async def mycom3(self, ctx):
+        await self.bot.say(content="Garry's Mod\nttt.scgc.xyz - Trouble in Terrorist Town #1\nprop.scgc.xyz - PropHunt #1\n\nCounter Strike Global Offensive\nkz.scgc.xyz - KZ/Climb\njb.scgc.xyz - Jailbreak\n\nTeam Fortress 2\ntf2.scgc.xyz - Unknown\n\nTeamspeak 3\nvoice.scgc.xyz")
+
+    @commands.command(pass_context=True)
+    async def mycom4(self, ctx):
+        embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.utcfromtimestamp(1525418280))
+
+        embed.set_author(name="SuperCentral Server List", url="https://supercentral.co", icon_url="https://images-ext-1.discordapp.net/external/9mm1HQh9TdVk8JuYgZQFiaUnUm0_8L0z2Nt6oW4zUqw/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/206641182606884866/694c6bd61c8379a64e8302670b4f76e7.webp?width=80&height=80")
+        embed.set_footer(text="Last Updated")
+        
+        embed.add_field(name="Garry's Mod", value="ttt.scgc.xyz - Trouble in Terrorist Town #1\nprop.scgc.xyz - PropHunt #1", inline=False)
+        embed.add_field(name="Counter Strike  Global Offensive", value="kz.scgc.xyz - KZ/Climb\njb.scgc.xyz - Jailbreak", inline=False)
+        embed.add_field(name="Team Fortress 2", value="tf2.scgc.xyz - Unknown", inline=False)
+        embed.add_field(name="Voice Servers", value="discord.scgc.xyz - Discord (the one you are in)\nvoice.scgc.xyz - Teamspeak3", inline=False)
+        
+        await self.bot.say(embed=embed)
 
     @commands.command(pass_context=True)
     async def mycom(self, ctx, user: discord.Member=None):

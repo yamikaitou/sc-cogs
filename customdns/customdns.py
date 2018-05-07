@@ -54,17 +54,22 @@ class CustomDNS:
         dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
 
     @commands.group(pass_context=True, no_pm=True, name="dns")
-    @checks.role_or_permissions(name="Server Manager")
     async def _dns(self, ctx):
         """Manage the DNS entries"""
+        if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
+            return False
+
         if ctx.invoked_subcommand is None:
             server = ctx.message.server
             await send_cmd_help(ctx)
 
+
+
     @_dns.command(pass_context=True, no_pm=True)
-    @checks.role_or_permissions(name="Server Manager")
-    async def nfo(self, ctx, ident, sub):
+    async def nfo(self, ctx, sub, ident):
         """Create a DNS entry from an NFO name"""
+        if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
+            return False
 
         ip = await self.resolver.query("{}.game.nfoservers.com".format(ident), 'A')
         client = cloud.dns.Client(project=self.settings["project"][0], credentials=self.creds)
@@ -89,9 +94,10 @@ class CustomDNS:
         await self.bot.say("DNS Entry Created. Don't forget to update the server list, !serverlist edit {}".format(sub))
 
     @_dns.command(pass_context=True, no_pm=True)
-    @checks.role_or_permissions(name="Server Manager")
-    async def a(self, ctx, ip, sub):
+    async def a(self, ctx, sub, ip):
         """Create or Modify a DNS A Record"""
+        if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
+            return False
 
         client = cloud.dns.Client(project=self.settings["project"][0], credentials=self.creds)
         zone = client.zone(self.settings['zone'][0], self.settings['domain'][0])
@@ -125,23 +131,51 @@ class CustomDNS:
             embed.set_footer(text="Last Updated")
 
             if len(self.slist['zone']['gmod']) != 0:
+                val = ""
+                for server in self.slist['zone']['gmod']:
+                    if server['port'] not in (27015,0):
+                        val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
+                    else:
+                        val += "{}.scgc.xyz:{} - {}\n".format(server['dns'], server['port'], server['name'])
+
                 embed.add_field(name="Garry's Mod - !gmod",
-                                value="ttt.scgc.xyz - Trouble in Terrorist Town #1\nprop.scgc.xyz - PropHunt #1",
+                                value=val,
                                 inline=False)
 
             if len(self.slist['zone']['csgo']) != 0:
+                val = ""
+                for server in self.slist['zone']['csgo']:
+                    if server['port'] not in (27015,0):
+                        val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
+                    else:
+                        val += "{}.scgc.xyz:{} - {}\n".format(server['dns'], server['port'], server['name'])
+
                 embed.add_field(name="Counter Strike Global Offensive - !csgo",
-                                value="kz.scgc.xyz - KZ/Climb\njb.scgc.xyz - Jailbreak",
+                                value=val,
                                 inline=False)
 
             if len(self.slist['zone']['tf2']) != 0:
+                val = ""
+                for server in self.slist['zone']['tf2']:
+                    if server['port'] not in (27015,0):
+                        val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
+                    else:
+                        val += "{}.scgc.xyz:{} - {}\n".format(server['dns'], server['port'], server['name'])
+
                 embed.add_field(name="Team Fortress 2 - !tf2",
-                                value="tf2.scgc.xyz - Unknown",
+                                value=val,
                                 inline=False)
 
             if len(self.slist['zone']['unk']) != 0:
+                val = ""
+                for server in self.slist['zone']['unk']:
+                    if server['port'] != 0:
+                        val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
+                    else:
+                        val += "{}.scgc.xyz:{} - {}\n".format(server['dns'], server['port'], server['name'])
+
                 embed.add_field(name="Undefined",
-                                value="unk.scgc.xyz - Unknown",
+                                value=val,
                                 inline=False)
 
             embed.add_field(name="Voice Servers - !voice",
@@ -151,12 +185,12 @@ class CustomDNS:
             await self.bot.say(embed=embed)
 
     @serverlist.command(pass_context=True, no_pm=True)
-    @checks.role_or_permissions(name="Server Manager")
-    @checks.role_or_permissions(name="Owner")
     async def edit(self, ctx, sub, port, name, group, game):
         """Modify entries on the Server List"""
+        if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
+            return False
 
-        await self.bot.say("You have access")
+
 
 def check_folders():
     if not os.path.exists("data/dns"):

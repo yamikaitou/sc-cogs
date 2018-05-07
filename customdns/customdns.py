@@ -6,7 +6,7 @@ import asyncio
 import aiodns
 from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
-from google import cloud
+from google.cloud import dns
 from google.oauth2 import service_account
 import os
 import datetime
@@ -72,7 +72,7 @@ class CustomDNS:
             return False
 
         ip = await self.resolver.query("{}.game.nfoservers.com".format(ident), 'A')
-        client = cloud.dns.Client(project=self.settings["project"][0], credentials=self.creds)
+        client = dns.Client(project=self.settings["project"][0], credentials=self.creds)
         zone = client.zone(self.settings['zone'][0], self.settings['domain'][0])
         record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain'][0]), 'A', 60 * 60 * 2,
                                               [ip[0].host])
@@ -99,7 +99,7 @@ class CustomDNS:
         if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
             return False
 
-        client = cloud.dns.Client(project=self.settings["project"][0], credentials=self.creds)
+        client = dns.Client(project=self.settings["project"][0], credentials=self.creds)
         zone = client.zone(self.settings['zone'][0], self.settings['domain'][0])
         record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain'][0]), 'A', 60 * 60 * 2,
                                               [ip])

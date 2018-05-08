@@ -127,11 +127,11 @@ class CustomDNS:
 
             if len(self.gmod) != 0:
                 val = ""
-                for server in self.gmod:
-                    if server['port'] not in (27015,0):
-                        val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
+                for server in self.gmod.items():
+                    if server[1]['port'] not in (27015,0):
+                        val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
                     else:
-                        val += "{}.scgc.xyz:{} - {}\n".format(server['dns'], server['port'], server['name'])
+                        val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
                 embed.add_field(name="Garry's Mod - !gmod",
                                 value=val,
@@ -139,11 +139,11 @@ class CustomDNS:
 
             if len(self.csgo) != 0:
                 val = ""
-                for server in self.csgo:
-                    if server['port'] not in (27015,0):
-                        val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
+                for server in self.csgo.items():
+                    if server[1]['port'] not in (27015,0):
+                        val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
                     else:
-                        val += "{}.scgc.xyz:{} - {}\n".format(server['dns'], server['port'], server['name'])
+                        val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
                 embed.add_field(name="Counter Strike Global Offensive - !csgo",
                                 value=val,
@@ -151,11 +151,11 @@ class CustomDNS:
 
             if len(self.tf2) != 0:
                 val = ""
-                for server in self.tf2:
-                    if server['port'] not in (27015,0):
-                        val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
+                for server in self.tf2.items():
+                    if server[1]['port'] not in (27015,0):
+                        val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
                     else:
-                        val += "{}.scgc.xyz:{} - {}\n".format(server['dns'], server['port'], server['name'])
+                        val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
                 embed.add_field(name="Team Fortress 2 - !tf2",
                                 value=val,
@@ -163,11 +163,11 @@ class CustomDNS:
 
             if len(self.unk) != 0:
                 val = ""
-                for server in self.unk:
-                    if server['port'] != 0:
-                        val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
+                for server in self.unk.items():
+                    if server[1]['port'] != 0:
+                        val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
                     else:
-                        val += "{}.scgc.xyz:{} - {}\n".format(server['dns'], server['port'], server['name'])
+                        val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
                 embed.add_field(name="Undefined",
                                 value=val,

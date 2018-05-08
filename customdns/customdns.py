@@ -18,7 +18,10 @@ class CustomDNS:
     def __init__(self, bot):
         self.bot = bot
         self.settings = dataIO.load_json(os.path.join("data", "dns", "settings.json"))
-        self.slist = dataIO.load_json(os.path.join("data", "dns", "list.json"))
+        self.gmod = dataIO.load_json(os.path.join("data", "dns", "gmod.json"))
+        self.csgo = dataIO.load_json(os.path.join("data", "dns", "csgo.json"))
+        self.tf2 = dataIO.load_json(os.path.join("data", "dns", "tf2.json"))
+        self.unk = dataIO.load_json(os.path.join("data", "dns", "unk.json"))
         self.creds = service_account.Credentials.from_service_account_file(os.path.join("data", "dns", "gcloud.json"))
         loop = asyncio.get_event_loop()
         self.resolver = aiodns.DNSResolver(loop=loop)
@@ -83,14 +86,8 @@ class CustomDNS:
             asyncio.sleep(60)
             changes.reload()
 
-        entry = []
-        entry['name'] = sub
-        entry['nfo'] = ident
-        entry['port'] = 0
-        entry['game'] = 'unk'
-        entry['group'] = 'unk'
-        self.slist['zone']['unk'].append(entry)
-        dataIO.save_json(os.path.join("data", "dns", "list.json"), self.slist)
+        self.unk[sub] = {'dns':sub, 'nfo':ident, 'port':0, 'name':'unk'}
+        dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
         await self.bot.say("DNS Entry Created. Don't forget to update the server list, !serverlist edit {}".format(sub))
 
     @_dns.command(pass_context=True, no_pm=True)
@@ -110,29 +107,23 @@ class CustomDNS:
             asyncio.sleep(60)
             changes.reload()
 
-        entry = []
-        entry['dns'] = sub
-        entry['nfo'] = 'n/a'
-        entry['port'] = 0
-        entry['name'] = 'unk'
-        entry['group'] = 'unk'
-        self.slist['zone']['unk'].append(entry)
-        dataIO.save_json(os.path.join("data", "dns", "list.json"), self.slist)
+        self.unk[sub] = {'dns':sub, 'nfo':ip, 'port': 0, 'name': 'unk'}
+        dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
         await self.bot.say("DNS Entry Created. Don't forget to update the server list if needed, !serverlist edit {}".format(sub))
 
     @commands.group(pass_context=True, no_pm=True, name="serverlist")
     async def serverlist(self, ctx):
         """Manage the DNS entries"""
         if ctx.invoked_subcommand is None:
-            embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.utcfromtimestamp(1525418280))
+            embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.utcfromtimestamp(self.slist['last']))
 
             embed.set_author(name="SuperCentral Server List", url="https://supercentral.co",
                              icon_url="https://supercentral.co/srvmgr/images/sclogo.jpg")
             embed.set_footer(text="Last Updated")
 
-            if len(self.slist['zone']['gmod']) != 0:
+            if len(self.gmod) != 0:
                 val = ""
-                for server in self.slist['zone']['gmod']:
+                for server in self.gmod:
                     if server['port'] not in (27015,0):
                         val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
                     else:
@@ -142,9 +133,9 @@ class CustomDNS:
                                 value=val,
                                 inline=False)
 
-            if len(self.slist['zone']['csgo']) != 0:
+            if len(self.csgo) != 0:
                 val = ""
-                for server in self.slist['zone']['csgo']:
+                for server in self.csgo:
                     if server['port'] not in (27015,0):
                         val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
                     else:
@@ -154,9 +145,9 @@ class CustomDNS:
                                 value=val,
                                 inline=False)
 
-            if len(self.slist['zone']['tf2']) != 0:
+            if len(self.tf2) != 0:
                 val = ""
-                for server in self.slist['zone']['tf2']:
+                for server in self.tf2:
                     if server['port'] not in (27015,0):
                         val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
                     else:
@@ -166,9 +157,9 @@ class CustomDNS:
                                 value=val,
                                 inline=False)
 
-            if len(self.slist['zone']['unk']) != 0:
+            if len(self.unk) != 0:
                 val = ""
-                for server in self.slist['zone']['unk']:
+                for server in self.unk:
                     if server['port'] != 0:
                         val += "{}.scgc.xyz - {}\n".format(server['dns'], server['name'])
                     else:
@@ -204,9 +195,24 @@ def check_files():
         print("Creating default dns's settings.json...")
         dataIO.save_json(f, {})
 
-    f = "data/dns/list.json"
+    f = "data/dns/gmod.json"
     if not dataIO.is_valid_json(f):
-        print("Creating default dns's list.json...")
+        print("Creating default dns's gmod.json...")
+        dataIO.save_json(f, {})
+
+    f = "data/dns/csgo.json"
+    if not dataIO.is_valid_json(f):
+        print("Creating default dns's csgo.json...")
+        dataIO.save_json(f, {})
+
+    f = "data/dns/tf2.json"
+    if not dataIO.is_valid_json(f):
+        print("Creating default dns's tf2.json...")
+        dataIO.save_json(f, {})
+
+    f = "data/dns/unk.json"
+    if not dataIO.is_valid_json(f):
+        print("Creating default dns's unk.json...")
         dataIO.save_json(f, {})
 
 

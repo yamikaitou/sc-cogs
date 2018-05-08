@@ -119,7 +119,7 @@ class CustomDNS:
     async def serverlist(self, ctx):
         """Manage the DNS entries"""
         if ctx.invoked_subcommand is None:
-            embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.utcfromtimestamp(self.settings['last']))
+            embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.fromtimestamp(self.settings['last']))
 
             embed.set_author(name="SuperCentral Server List", url="https://supercentral.co",
                              icon_url="https://supercentral.co/srvmgr/images/sclogo.jpg")
@@ -164,7 +164,7 @@ class CustomDNS:
             if len(self.unk) != 0:
                 val = ""
                 for server in self.unk.items():
-                    if server[1]['port'] != 0:
+                    if server[1]['port'] == 0:
                         val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
                     else:
                         val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
@@ -180,10 +180,90 @@ class CustomDNS:
             await self.bot.say(embed=embed)
 
     @serverlist.command(pass_context=True, no_pm=True)
-    async def edit(self, ctx, sub, port, name, group, game):
+    async def edit(self, ctx, sub, game, port, *name):
         """Modify entries on the Server List"""
         if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
             return False
+
+        if game not in ('gmod','csgo','tf2'):
+            await self.bot.say("Invalid game, please use gmod, csgo or tf2")
+
+        if sub in self.unk:
+            val = self.unk.pop(sub)
+            val['port'] = port
+            val['name'] = name
+            if game == 'gmod':
+                self.gmod[sub] = val
+                dataIO.save_json(os.path.join("data", "dns", "gmod.json"), self.gmod)
+            elif game == 'csgo':
+                self.csgo[sub] = val
+                dataIO.save_json(os.path.join("data", "dns", "csgo.json"), self.csgo)
+            elif game == 'tf2':
+                self.tf2[sub] = val
+                dataIO.save_json(os.path.join("data", "dns", "tf2.json"), self.tf2)
+
+            dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+            self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
+            dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+        elif sub in self.gmod:
+            if sub == 'gmod':
+                self.gmod[sub]['port'] = port
+                self.gmod[sub]['name'] = name
+                dataIO.save_json(os.path.join("data", "dns", "gmod.json"), self.gmod)
+            else:
+                val = self.gmod.pop(sub)
+                val['port'] = port
+                val['name'] = name
+                if game == 'csgo':
+                    self.csgo[sub] = val
+                    dataIO.save_json(os.path.join("data", "dns", "csgo.json"), self.csgo)
+                elif game == 'tf2':
+                    self.tf2[sub] = val
+                    dataIO.save_json(os.path.join("data", "dns", "tf2.json"), self.tf2)
+
+            dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+            self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
+            dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+        elif sub in self.csgo:
+            if sub == 'csgo':
+                self.csgo[sub]['port'] = port
+                self.csgo[sub]['name'] = name
+                dataIO.save_json(os.path.join("data", "dns", "csgo.json"), self.csgo)
+            else:
+                val = self.csgo.pop(sub)
+                val['port'] = port
+                val['name'] = name
+                if game == 'gmod':
+                    self.gmod[sub] = val
+                    dataIO.save_json(os.path.join("data", "dns", "gmod.json"), self.gmod)
+                elif game == 'tf2':
+                    self.tf2[sub] = val
+                    dataIO.save_json(os.path.join("data", "dns", "tf2.json"), self.tf2)
+
+            dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+            self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
+            dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+        elif sub in self.tf2:
+            if sub == 'tf2':
+                self.tf2[sub]['port'] = port
+                self.tf2[sub]['name'] = name
+                dataIO.save_json(os.path.join("data", "dns", "tf2.json"), self.tf2)
+            else:
+                val = self.tf2.pop(sub)
+                val['port'] = port
+                val['name'] = name
+                if game == 'csgo':
+                    self.csgo[sub] = val
+                    dataIO.save_json(os.path.join("data", "dns", "csgo.json"), self.csgo)
+                elif game == 'gmod':
+                    self.gmod[sub] = val
+                    dataIO.save_json(os.path.join("data", "dns", "gmod.json"), self.gmod)
+
+            dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+            self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
+            dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+        else:
+            await self.bot.say("No server list entry found for that DNS name")
 
 
 

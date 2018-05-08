@@ -229,7 +229,7 @@ class CustomDNS:
                     self.tf2[sub] = val
                     dataIO.save_json(os.path.join("data", "dns", "tf2.json"), self.tf2)
 
-            dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+            dataIO.save_json(os.path.join("data", "dns", "gmod.json"), self.unk)
             self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
             dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
         elif sub in self.csgo:
@@ -248,7 +248,7 @@ class CustomDNS:
                     self.tf2[sub] = val
                     dataIO.save_json(os.path.join("data", "dns", "tf2.json"), self.tf2)
 
-            dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+            dataIO.save_json(os.path.join("data", "dns", "csgo.json"), self.unk)
             self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
             dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
         elif sub in self.tf2:
@@ -267,7 +267,7 @@ class CustomDNS:
                     self.gmod[sub] = val
                     dataIO.save_json(os.path.join("data", "dns", "gmod.json"), self.gmod)
 
-            dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+            dataIO.save_json(os.path.join("data", "dns", "tf2.json"), self.unk)
             self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
             dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
         else:

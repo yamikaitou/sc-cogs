@@ -70,14 +70,16 @@ class CustomDNS:
 
     @_dns.command(pass_context=True, no_pm=True)
     async def nfo(self, ctx, sub, ident):
-        """Create a DNS entry from an NFO name"""
+        """Create a DNS entry from an NFO name
+        sub = DNS prefix, the part before .scgc.xyz
+        ident = NFO Prefix/Identifier, the part before .game.nfoservers.com"""
         if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
             return False
 
         ip = await self.resolver.query("{}.game.nfoservers.com".format(ident), 'A')
         client = dns.Client(project=self.settings["project"][0], credentials=self.creds)
         zone = client.zone(self.settings['zone'][0], self.settings['domain'][0])
-        record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain'][0]), 'A', 60 * 60 * 2,
+        record_set = zone.resource_record_set('{}.{}.'.format(sub, self.settings['domain'][0]), 'A', 60 * 60,
                                               [ip[0].host])
         changes = zone.changes()
         changes.add_record_set(record_set)
@@ -94,7 +96,9 @@ class CustomDNS:
 
     @_dns.command(pass_context=True, no_pm=True)
     async def a(self, ctx, sub, ip):
-        """Create or Modify a DNS A Record"""
+        """Create or Modify a DNS A Record
+        sub = DNS prefix, the part before .scgc.xyz
+        ip = IP the record should point to"""
         if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
             return False
 
@@ -117,7 +121,7 @@ class CustomDNS:
 
     @commands.group(pass_context=True, no_pm=True, name="serverlist")
     async def serverlist(self, ctx):
-        """Manage the DNS entries"""
+        """Shows a list of our servers"""
         if ctx.invoked_subcommand is None:
             embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.fromtimestamp(self.settings['last']))
 
@@ -133,7 +137,7 @@ class CustomDNS:
                     else:
                         val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
-                embed.add_field(name="Garry's Mod - !gmod",
+                embed.add_field(name="Garry's Mod",
                                 value=val,
                                 inline=False)
 
@@ -145,7 +149,7 @@ class CustomDNS:
                     else:
                         val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
-                embed.add_field(name="Counter Strike Global Offensive - !csgo",
+                embed.add_field(name="Counter Strike Global Offensive",
                                 value=val,
                                 inline=False)
 
@@ -157,7 +161,7 @@ class CustomDNS:
                     else:
                         val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
-                embed.add_field(name="Team Fortress 2 - !tf2",
+                embed.add_field(name="Team Fortress 2",
                                 value=val,
                                 inline=False)
 
@@ -173,15 +177,19 @@ class CustomDNS:
                                 value=val,
                                 inline=False)
 
-            embed.add_field(name="Voice Servers - !voice",
+            embed.add_field(name="Voice Servers",
                             value="discord.scgc.xyz - Discord (the one you are in)\nvoice.scgc.xyz - Teamspeak3",
                             inline=False)
 
             await self.bot.say(embed=embed)
 
     @serverlist.command(pass_context=True, no_pm=True)
-    async def edit(self, ctx, sub, game, port, *name):
-        """Modify entries on the Server List"""
+    async def edit(self, ctx, sub, game, port, name):
+        """Modify entries on the Server List
+        sub = DNS prefix, the part before .scgc.xyz
+        game = gmod, csgo or tf2
+        port = Server Port (will be displayed if something other than 27015
+        name = Name to display on the !serverlist. Enclose in quotes if needed"""
         if checks.role_or_permissions(ctx, lambda r: r.name.lower() in ('monkey','server manager','owner')) is False:
             return False
 

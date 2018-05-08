@@ -88,6 +88,8 @@ class CustomDNS:
 
         self.unk[sub] = {'dns':sub, 'nfo':ident, 'port':0, 'name':'unk'}
         dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+        self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
+        dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
         await self.bot.say("DNS Entry Created. Don't forget to update the server list, !serverlist edit {}".format(sub))
 
     @_dns.command(pass_context=True, no_pm=True)
@@ -109,13 +111,15 @@ class CustomDNS:
 
         self.unk[sub] = {'dns':sub, 'nfo':ip, 'port': 0, 'name': 'unk'}
         dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
+        self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
+        dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
         await self.bot.say("DNS Entry Created. Don't forget to update the server list if needed, !serverlist edit {}".format(sub))
 
     @commands.group(pass_context=True, no_pm=True, name="serverlist")
     async def serverlist(self, ctx):
         """Manage the DNS entries"""
         if ctx.invoked_subcommand is None:
-            embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.utcfromtimestamp(self.slist['last']))
+            embed = Embed(colour=discord.Colour(0x426156), timestamp=datetime.datetime.utcfromtimestamp(self.settings['last']))
 
             embed.set_author(name="SuperCentral Server List", url="https://supercentral.co",
                              icon_url="https://supercentral.co/srvmgr/images/sclogo.jpg")

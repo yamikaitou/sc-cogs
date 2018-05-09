@@ -213,6 +213,7 @@ class CustomDNS:
             dataIO.save_json(os.path.join("data", "dns", "unk.json"), self.unk)
             self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
             dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+            await self.bot.say("Edit successful")
         elif sub in self.gmod:
             if sub == 'gmod':
                 self.gmod[sub]['port'] = port
@@ -232,6 +233,7 @@ class CustomDNS:
             dataIO.save_json(os.path.join("data", "dns", "gmod.json"), self.unk)
             self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
             dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+            await self.bot.say("Edit successful")
         elif sub in self.csgo:
             if sub == 'csgo':
                 self.csgo[sub]['port'] = port
@@ -251,6 +253,7 @@ class CustomDNS:
             dataIO.save_json(os.path.join("data", "dns", "csgo.json"), self.unk)
             self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
             dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+            await self.bot.say("Edit successful")
         elif sub in self.tf2:
             if sub == 'tf2':
                 self.tf2[sub]['port'] = port
@@ -270,6 +273,7 @@ class CustomDNS:
             dataIO.save_json(os.path.join("data", "dns", "tf2.json"), self.unk)
             self.settings['last'] = int(datetime.datetime.utcnow().timestamp())
             dataIO.save_json(os.path.join("data", "dns", "settings.json"), self.settings)
+            await self.bot.say("Edit successful")
         else:
             await self.bot.say("No server list entry found for that DNS name")
 

@@ -178,7 +178,7 @@ class CustomDNS:
                                 inline=False)
 
             embed.add_field(name="Voice Servers",
-                            value="[discord.scgc.xyz](discord.scgc.xyz) - Discord (the one you are in)\n[voice.scgc.xyz](ts3server://voice.scgc.xyz] - Teamspeak3",
+                            value="[discord.scgc.xyz](https://discord.scgc.xyz) - Discord (the one you are in)\n[voice.scgc.xyz](ts3server://voice.scgc.xyz) - Teamspeak3",
                             inline=False)
 
             await self.bot.say(embed=embed)

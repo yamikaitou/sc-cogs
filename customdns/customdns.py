@@ -133,9 +133,9 @@ class CustomDNS:
                 val = ""
                 for server in self.gmod.items():
                     if server[1]['port'] not in (27015,0):
-                        val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
+                        val += "[{0}.scgc.xyz](steam://connect/{0}.scgc.xyz) - {1}\n".format(server[1]['dns'], server[1]['name'])
                     else:
-                        val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
+                        val += "[{0}.scgc.xyz:{1}](steam://connect/{0}.scgc.xyz:{1}) - {2}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
                 embed.add_field(name="Garry's Mod",
                                 value=val,
@@ -145,9 +145,9 @@ class CustomDNS:
                 val = ""
                 for server in self.csgo.items():
                     if server[1]['port'] not in (27015,0):
-                        val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
+                        val += "[{0}.scgc.xyz](steam://connect/{0}.scgc.xyz) - {1}\n".format(server[1]['dns'], server[1]['name'])
                     else:
-                        val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
+                        val += "[{0}.scgc.xyz:{1}](steam://connect/{0}.scgc.xyz:{1}) - {2}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
                 embed.add_field(name="Counter Strike Global Offensive",
                                 value=val,
@@ -157,9 +157,9 @@ class CustomDNS:
                 val = ""
                 for server in self.tf2.items():
                     if server[1]['port'] not in (27015,0):
-                        val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
+                        val += "[{0}.scgc.xyz](steam://connect/{0}.scgc.xyz) - {1}\n".format(server[1]['dns'], server[1]['name'])
                     else:
-                        val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
+                        val += "[{0}.scgc.xyz:{1}](steam://connect/{0}.scgc.xyz:{1}) - {2}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
                 embed.add_field(name="Team Fortress 2",
                                 value=val,
@@ -169,16 +169,16 @@ class CustomDNS:
                 val = ""
                 for server in self.unk.items():
                     if server[1]['port'] == 0:
-                        val += "{}.scgc.xyz - {}\n".format(server[1]['dns'], server[1]['name'])
+                        val += "[{0}.scgc.xyz](steam://connect/{0}.scgc.xyz) - {1}\n".format(server[1]['dns'], server[1]['name'])
                     else:
-                        val += "{}.scgc.xyz:{} - {}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
+                        val += "[{0}.scgc.xyz:{1}](steam://connect/{0}.scgc.xyz:{1}) - {2}\n".format(server[1]['dns'], server[1]['port'], server[1]['name'])
 
                 embed.add_field(name="Undefined",
                                 value=val,
                                 inline=False)
 
             embed.add_field(name="Voice Servers",
-                            value="discord.scgc.xyz - Discord (the one you are in)\nvoice.scgc.xyz - Teamspeak3",
+                            value="[discord.scgc.xyz](discord.scgc.xyz) - Discord (the one you are in)\n[voice.scgc.xyz](ts3server://voice.scgc.xyz] - Teamspeak3",
                             inline=False)
 
             await self.bot.say(embed=embed)

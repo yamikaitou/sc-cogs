@@ -12,7 +12,7 @@ class Trout:
     async def _slap(self, ctx, victim: discord.Member):
         """Slap someone with a trout"""
         author = ctx.message.author
-        await self.bot.say("Special delivery for {}, courtesy of Fish Prime (the freshest fish delivered anywhere)\n{} slaps {} with a large trout".format(victim.mention, author.mention, victim.mention))
+        await self.bot.say("Special delivery for {}, courtesy of Fish Prime (the freshest fish delivered anywhere)\nI slap you with a large trout :fish:".format(victim.mention))
 
 
 def setup(bot):

@@ -1,0 +1,9 @@
+{
+    "author": ["YamiKaitou"],
+    "name": "Server List",
+    "short": "Displays a list of Game/Voice servers",
+    "description": "Displays a list of Game and/or Voice servers for gaming communities",
+    "tags": [
+        "utilities"
+    ]
+}
